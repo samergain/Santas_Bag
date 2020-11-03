@@ -18,12 +18,15 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   });
+<<<<<<< HEAD
   User.associate = function(models) {
     
     User.hasMany(models.userCircle, {
       onDelete: "cascade"
     });
   };
+=======
+>>>>>>> 86dadb70cd2672ee6c30fbc6a00917c9b4331561
   // Creating a custom method for our User model. This will check if an unhashed password entered by the user can be compared to the hashed password stored in our database
   User.prototype.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
