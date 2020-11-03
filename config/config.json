@@ -1,12 +1,8 @@
 {
   "development": {
     "username": "root",
-<<<<<<< HEAD
     "password": "DansPassword",
-=======
-    "password": "root",
->>>>>>> 86dadb70cd2672ee6c30fbc6a00917c9b4331561
-    "database": "passport_demo",
+    "database": "santas_bagDB",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

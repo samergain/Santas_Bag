@@ -26,6 +26,19 @@ module.exports = function(app) {
       });
   });
 
+  //receive userCircle info
+  app.post("/api/usercircle", function(req, res) {
+    db.UserCircle.create({
+      name: req.body.name,
+      age: req.body.age,
+      budget: req.body.budget,
+    })
+      .then(function() {
+        res.redirect(307, "/api/gift");
+      })
+      
+  });
+
   // Route for logging user out
   app.get("/logout", function(req, res) {
     req.logout();
