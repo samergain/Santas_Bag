@@ -1,4 +1,4 @@
-drop database santas_bagDB;
+drop database if exists santas_bagDB;
 create database santas_bagDB;
 use santas_bagDB;
 

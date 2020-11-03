@@ -7,11 +7,11 @@ module.exports = function(sequelize, DataTypes) {
       href: DataTypes.STRING
     });
   
-    Gift.associate = function(models) {
-      Gift.hasMany(models.userCircle, {
-        onDelete: "Null"
-      });
-    };
+    // Gift.associate = function(models) {
+    //   Gift.hasMany(models.UserCircle, {
+    //     onDelete: "Null"
+    //   });
+    // };
   
     return Gift;
   };
