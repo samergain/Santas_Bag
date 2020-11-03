@@ -33,4 +33,3 @@ create table userCircle (
         ON UPDATE SET NULL
         ON DELETE SET NULL
 );
-
