@@ -8,7 +8,6 @@ module.exports = function(sequelize, DataTypes) {
     });
   
     Gift.associate = function(models) {
-      
       Gift.hasMany(models.userCircle, {
         onDelete: "Null"
       });
@@ -16,4 +15,3 @@ module.exports = function(sequelize, DataTypes) {
   
     return Gift;
   };
-  

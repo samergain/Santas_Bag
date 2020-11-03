@@ -22,6 +22,8 @@ create table userCircle (
     age int,
     interests varchar(200),
     budget integer,
+    userId int,
+    giftId int,
     FOREIGN KEY (userId)
 		REFERENCES user(id)
         ON UPDATE cascade
