@@ -1,4 +1,4 @@
-drop database santas_bagDB;
+drop database if exists santas_bagDB;
 create database santas_bagDB;
 use santas_bagDB;
 
@@ -22,7 +22,7 @@ create table userCircle (
     age int,
     interests varchar(200),
     budget integer,
-    userId int not null,
+    userId int,
     giftId int,
     FOREIGN KEY (userId)
 		REFERENCES user(id)
