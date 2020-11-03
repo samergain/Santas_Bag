@@ -60,4 +60,21 @@ module.exports = function(app) {
     }
   });
 
+  //Route for adding userCirlce details to the table
+  app.post("/api/addPerson", function(req, res) {
+    db.UserCircle.create({
+      name: parseInt(req.body.name),
+      age: parseInt(req.body.age),
+      interests: req.body.interests,
+      budget: req.body.budget,
+      userid: req.body.userid
+    })
+      .then(function() {
+        res.redirect(307, "/api/login");
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+
 };
