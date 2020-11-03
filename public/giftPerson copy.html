@@ -34,12 +34,9 @@
     </div>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
-        <h2>Welcome! <span id="memberEmail" class="member-name"></span></h2>
+        <h2>Welcome! <span class="member-name"></span></h2>
         <h4>Add your gift person!</h4>
         <form class="addPerson">
-          <div class="form-group">
-            <input type="hidden" class="form-control" id="idInput" class="hiddenId">
-          </div>
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" class="form-control" id="nameInput" placeholder="Name">
@@ -58,9 +55,29 @@
           </div>
           <div class="form-group">
             <label for="interests">Interests</label>
-            <input type="text" class="form-control" id="interestsInput" placeholder="Interests of the Person">
+            <input type="text" class="form-control" id="priceInput" placeholder="Interests of the Person">
           </div>
           <br />
+          <h4><span>Gift Preference - Choose One:</span></h4>
+          <div class="form-group">
+            <input type="radio" class="form-control radio-control" id="electronic-input" name="preference" value="electronic" placeholder="Electronics" checked/>
+            <label for="electronic" class="radio_label">Electronics</label>
+          </div>
+          <div class="form-group">
+            <input type="radio" class="form-control radio-control" id="vgame-input" name="preference" value="videogames" placeholder="Video Games">
+            <label for="games" class="radio_label">Video Games</label>
+          <div class="form-group">
+            <input type="radio" class="form-control radio-control" id="kitchen-input" name="preference" value="kitchen" placeholder="Electronics">
+            <label for="kitchen" class="radio_label">Kitchen</label>
+          </div>
+          <div class="form-group">
+            <input type="radio" class="form-control radio-control" id="auto-input" name="preference" value="auto" placeholder="Auto & Home Improvement">
+            <label for="auto" class="radio_label">Auto & Home Improvement</label>
+          </div>
+          <div class="form-group">
+            <input type="radio" class="form-control radio-control" id="outdoor-input" name="preference" value="outdoor" placeholder="Outdoor, Hunting & Fishing">
+            <label for="outdoor" class="radio_label">Outdoor, Hunting & Fishing</label>
+          </div>
           <div style="display: none" id="alert" class="alert alert-danger" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span> <span class="msg"></span>

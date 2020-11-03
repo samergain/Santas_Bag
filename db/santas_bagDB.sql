@@ -22,6 +22,8 @@ create table userCircle (
     age int,
     interests varchar(200),
     budget integer,
+    userId int not null,
+    giftId int,
     FOREIGN KEY (userId)
 		REFERENCES user(id)
         ON UPDATE cascade
@@ -31,4 +33,3 @@ create table userCircle (
         ON UPDATE SET NULL
         ON DELETE SET NULL
 );
-
