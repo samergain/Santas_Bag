@@ -1,0 +1,32 @@
+form.signup,
+form.login {
+  margin-top: 50px;
+}
+
+/* input[type="radio"]{
+  -webkit-appearance: radio;
+  display: inline;
+} */
+
+/* input[type="checkbox"], input[type="radio"] {
+  width: 1em;
+  z-index: -1;
+  opacity: 1;
+} */
+
+input[type="checkbox"], input[type="radio"]{
+  width: 1em;
+  position: relative !important;
+  opacity: 1 !important;
+  pointer-events: all !important;
+  display: inline;
+  scale: 0;
+}
+
+.radio-label {
+  display:inline;
+}
+
+.jumbotron{
+  background-image: url("https://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/12/santa-claus-10.jpg");
+}
