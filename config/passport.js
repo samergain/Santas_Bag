@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 var passport = require("passport");
-=======
- var passport = require("passport");
->>>>>>> 86dadb70cd2672ee6c30fbc6a00917c9b4331561
 var LocalStrategy = require("passport-local").Strategy;
 
 var db = require("../models");
