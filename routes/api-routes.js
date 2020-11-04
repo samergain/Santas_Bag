@@ -47,14 +47,38 @@ module.exports = function(app) {
     }
   });
 
+  // Get all gifts from the table
+  app.get("/api/getAllPersons/:id", function(req, res) {
+    db.UserCircle.findAll({
+      where: {
+        userid: req.params.id
+      }
+    }).then(function(results) {
+      res.json(results);
+    });
+  });
+
+  
+  // Get all gifts from the table
+  app.get("/api/getOnePerson/:id", function(req, res) {
+    db.UserCircle.findAll({
+      where: {
+          id: req.params.id
+      }
+    }).then(function(results) {
+       res.json(results);
+    });
+  });
+  
+
   //Route for adding userCirlce details to the table
   app.post("/api/addPerson", function(req, res) {
     db.UserCircle.create({
       name: req.body.name,
       age: parseInt(req.body.age),
       keywords: req.body.interests,
-      budget: parseInt(req.body.budget)
-      //userid: req.body.userid
+      budget: parseInt(req.body.budget),
+      userid: req.body.userid
     })
       .then(function() {
         // res.redirect(307, "/giftSearch");
