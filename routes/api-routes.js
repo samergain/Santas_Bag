@@ -27,11 +27,12 @@ module.exports = function(app) {
   });
 
   //receive userCircle info
-  app.post("/api/usercircle", function(req, res) {
+  app.post("/api/addPerson", function(req, res) {
     db.UserCircle.create({
       name: req.body.name,
       age: req.body.age,
       budget: req.body.budget,
+      keywords: req.body.keywords
     })
       .then(function() {
         res.redirect(307, "/api/gift");
