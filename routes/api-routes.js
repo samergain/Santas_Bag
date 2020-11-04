@@ -109,7 +109,7 @@ module.exports = function (app) {
 
   // Get all gifts from the table
   app.get("/api/giftSearch/:srchItem", function (req, res) {
-    db.Gift.findAll({
+    db.ItemStorage.findAll({
       where: {
         keywords: req.params.srchItem
       }
@@ -124,7 +124,7 @@ module.exports = function (app) {
     console.log("budget: ", req.params.budget);
     console.log("keywords: ", req.params.keywords);
 
-    db.Gift.findAll({
+    db.ItemStorage.findAll({
       where: {
         price: {
           [Op.lte] : req.params.budget
