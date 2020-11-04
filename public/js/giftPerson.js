@@ -10,20 +10,20 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
-    console.log("form submit working");
+    console.log("search form submit working");
     var userCircleData = {
-      name : $("#nameInput").val(),
-      age: $("#ageInput").val(),
-      keywords: $("#interestsInput").val(),
-      budget: $("#priceInput").val(),
-      userid: $("#userId").val()
+      name : $("#nameInput").val().trim(),
+      age: $("#ageInput").val().trim(),
+      interests: $("#interestsInput").val().trim(),
+      budget: $("#priceInput").val().trim(),
+      userid: $("#userId").val().trim()
     };
-    console.log("addPerson Form input:", addPersonForm);
+
     if (!userCircleData.name)  {
       return;
     }
     // If we have an email and password, run the signUpUser function
-    addGiftPerson(userCircleData.name, userCircleData.age, userCircleData.budget, userCircleData.keywords);
+    addGiftPerson(userCircleData.name, userCircleData.age, userCircleData.interests, userCircleData.budget, userCircleData.id);
     $("#nameInput").val("");
     $("#ageInput").val("");
     $("#priceInput").val("");
@@ -32,16 +32,17 @@ $(document).ready(function() {
   });
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
-  function addGiftPerson(name, age, budget, keywords) {
+  function addGiftPerson(name, age, interests, budget, userid) {
     console.log("function addGiftPerson called");
     $.post("/api/addPerson", {
       name: name,
       age: age,
       budget: budget,
-      keywords : keywords
+      userid: userid
     })
       .then(function(data) {
-        window.location.replace("/giftPerson");
+        console.log("addedGiftPErson", data);
+        window.location.replace("/giftSearch");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);

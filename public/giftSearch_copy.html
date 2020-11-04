@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Passport Authentication</title>
+  <title>Gift Search</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
@@ -35,28 +35,13 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <h2>Welcome! <span class="member-name"></span></h2>
-        <h4>Add your gift person!</h4>
-        <form class="addPerson">
+        <h4>Start your gift Search!</h4>
+        <form class="searchGift">
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="nameInput" placeholder="Name">
+            <label for="searchCriteria">Search For Gift Item</label>
+            <input type="text" class="form-control" id="srchInput" placeholder="Search For Gift Item">
           </div>
-          <div class="form-group">
-            <label for="age">Age</label>
-            <input type="text" class="form-control" id="ageInput" placeholder="Age">
-          </div>
-          <div class="form-group">
-            <label for="age">Gender</label>
-            <input type="text" class="form-control" id="genderInput" placeholder="Gender">
-          </div>
-          <div class="form-group">
-            <label for="price">Price Limit/Budget</label>
-            <input type="text" class="form-control" id="priceInput" placeholder="Max Price Limit">
-          </div>
-          <div class="form-group">
-            <label for="interests">Interests</label>
-            <input type="text" class="form-control" id="priceInput" placeholder="Interests of the Person">
-          </div>
+         
           <br />
           <h4><span>Gift Preference - Choose One:</span></h4>
           <div class="form-group">
@@ -82,7 +67,7 @@
             <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
             <span class="sr-only">Error:</span> <span class="msg"></span>
           </div>
-          <button type="submit" class="btn btn-default">Submit</button>
+          <button type="submit" class="btn btn-default">Search</button>
         </form>
       </div>
     </div>
