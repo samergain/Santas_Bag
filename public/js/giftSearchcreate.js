@@ -42,24 +42,27 @@ function displayCards(giftObj) {
 
         let d1 = $("<div>");
         d1.attr("class", "card");
-        d1.attr("style", "width: 100%;");
         let d2 = $("<div>");
         d2.attr("class", "card-body");
         let img = $("<img>");
         img.attr("class", "card-img-top");
         img.attr("src", giftObj.thumbnail[i]);
+        let btnTag = $("<button>");
+        btnTag.attr("class", "btn btn-default addGift");
         let aTag = $("<a>");
         aTag.attr("href", giftObj.url[i]);
+        aTag.text(giftObj.title[i]);
         let hFive = $("<h5>");
         hFive.attr("class", "card-title");
-        hFive.text(giftObj.title[i]);
         let pTag = $("<p>");
         pTag.attr("class", "card-text");
         pTag.text(giftObj.current_price[i]);
 
         d1.append(d2);
+        d1.append(btnTag);
         d1.append(img);
         d2.append(hFive);
+        hFive.append(aTag);
         d2.append(pTag);
         $(".result").append(d1);
     }   
