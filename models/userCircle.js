@@ -6,20 +6,20 @@ module.exports = function(sequelize, DataTypes) {
       keywords: DataTypes.STRING
     });
   
-    // UserCircle.associate = function(models) {
-    //   // We're saying that a userCircle should belong to a user
-    //   // A userCircle can't be created without a user due to the foreign key constraint
-    //   UserCircle.belongsTo(models.user, {
-    //     foreignKey: {
-    //       allowNull: false
-    //     }
-    //   });
-    //   UserCircle.belongsTo(models.gift, {
-    //     foreignKey: {
-    //       allowNull: false
-    //     }
-    //   });
-    //};
-  
+    UserCircle.associate = function(models) {
+      // We're saying that a userCircle should belong to a user
+      // A userCircle can't be created without a user due to the foreign key constraint
+      UserCircle.belongsTo(models.User, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
+      UserCircle.belongsTo(models.Gift, {
+        foreignKey: {
+          allowNull: false
+        }
+      });
+    };
+
     return UserCircle;
   };
