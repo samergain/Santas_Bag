@@ -12,7 +12,7 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
-    console.log("form submit working");
+    console.log("search form submit working");
     var userCircleData = {
       name : $("#nameInput").val().trim(),
       age: $("#ageInput").val().trim(),
@@ -45,7 +45,8 @@ $(document).ready(function() {
       userid: userid
     })
       .then(function(data) {
-        window.location.replace("/giftPerson");
+        console.log("addedGiftPErson", data);
+        window.location.replace("/giftSearch");
         // If there's an error, handle it by throwing up a bootstrap alert
       })
       .catch(handleLoginErr);

@@ -10,16 +10,16 @@ module.exports = function(sequelize, DataTypes) {
     //   // We're saying that a userCircle should belong to a user
     //   // A userCircle can't be created without a user due to the foreign key constraint
     //   UserCircle.belongsTo(models.user, {
-    //     userId: {
+    //     foreignKey: {
     //       allowNull: false
     //     }
     //   });
     //   UserCircle.belongsTo(models.gift, {
-    //     giftId: {
+    //     foreignKey: {
     //       allowNull: false
     //     }
     //   });
-    // };
+    //};
   
     return UserCircle;
   };

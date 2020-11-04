@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Gift Search</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/lumen/bootstrap.min.css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!--Materialize icons-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <link href="stylesheets/style.css" rel="stylesheet">
+</head>
+
+<body>
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/logout">
+          Logout
+        </a>
+      </div>
+    </div>
+  </nav>
+  <div class="container teal lighten-3 ">
+    <div class="jumbotron" style="margin-top:0">
+      <h1 style="text-shadow: 2px 2px gray; color: red" class="jumbotronic">Santa's Bag!!! Ho! Ho! Ho!</h1>
+      <h6 style=" text-shadow: 1px 1px gray; color:white">Track your Christmas Shopping List !!!</h6>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3" id="srchedResult">
+        <h2>Welcome! <span class="member-name"></span></h2>
+        <h4>Start your gift Search!</h4>
+        <form class="searchGift">
+          <div class="form-group">
+            <label for="searchCriteria">Search For Gift Item</label>
+            <input type="text" class="form-control" id="srchInput" placeholder="Search For Gift Item">
+          </div>
+         
+          <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span> <span class="msg"></span>
+          </div>
+          <button type="submit" class="btn btn-default">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="js/giftSearch.js"></script>
+
+</body>
+
+</html>
