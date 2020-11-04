@@ -39,7 +39,7 @@ $(document).ready(function() {
         div.append("<p>Interests: " + data[i].keywords + "</p>");
         div.append("<button class='delete' data-id='" + data[i].id + "'>DELETE PERSON</button>");
         div.append("<button class='search' data-id='" + data[i].id + "'>SEARCH GIFT</button>");
-  
+        
         $("#stats").append(div);
   
       }
@@ -62,16 +62,6 @@ $(document).ready(function() {
       $(".search").click(function() {
         console.log("Print GiftPerson ID:" , $(this).attr("data-id"));
         window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
-        // $.ajax({
-        //   method: "GET",
-        //   url: "/api/getOnePerson/" + $(this).attr("data-id")
-        // })
-        //   // On success, run the following code
-        //   .then(function(data) {
-        //     console.log("One Person Info pulled Successfully!");
-        //     storeUserDataInSession(data);
-        //     //window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
-        //   });
       });
 
     
