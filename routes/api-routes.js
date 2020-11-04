@@ -26,18 +26,18 @@ module.exports = function(app) {
       });
   });
 
-  //receive userCircle info
-  app.post("/api/usercircle", function(req, res) {
-    db.UserCircle.create({
-      name: req.body.name,
-      age: req.body.age,
-      budget: req.body.budget,
-    })
-      .then(function() {
-        res.redirect(307, "/api/gift");
-      })
+  // //receive userCircle info
+  // app.post("/api/usercircle", function(req, res) {
+  //   db.UserCircle.create({
+  //     name: req.body.name,
+  //     age: req.body.age,
+  //     budget: req.body.budget,
+  //   })
+  //     .then(function() {
+  //       res.redirect(307, "/api/gift");
+  //     })
       
-  });
+  // });
 
   // Route for logging user out
   app.get("/logout", function(req, res) {
@@ -59,5 +59,60 @@ module.exports = function(app) {
       });
     }
   });
+
+  // Get all gifts from the table
+  app.get("/api/getAllPersons/:id", function(req, res) {
+    db.UserCircle.findAll({
+      where: {
+        userid: req.params.id
+      }
+    }).then(function(results) {
+      res.json(results);
+    });
+  });
+
+  
+  // Get all gifts from the table
+  app.get("/api/getOnePerson/:id", function(req, res) {
+    db.UserCircle.findAll({
+      where: {
+          id: req.params.id
+      }
+    }).then(function(results) {
+       res.json(results);
+    });
+  });
+  
+
+  //Route for adding userCirlce details to the table
+  app.post("/api/addPerson", function(req, res) {
+    db.UserCircle.create({
+      name: req.body.name,
+      age: parseInt(req.body.age),
+      keywords: req.body.interests,
+      budget: parseInt(req.body.budget),
+      userid: req.body.userid
+    })
+      .then(function() {
+        // res.redirect(307, "/giftSearch");
+        res.redirect("/giftSearch");
+      })
+      .catch(function(err) {
+        res.status(401).json(err);
+      });
+  });
+
+
+    // Get all gifts from the table
+    app.get("/api/giftSearch/:srchItem", function(req, res) {
+      db.Gift.findAll({
+        where: {
+          keywords: req.params.srchItem
+        }
+      }).then(function(results) {
+        res.json(results);
+      });
+    });
+  
 
 };
