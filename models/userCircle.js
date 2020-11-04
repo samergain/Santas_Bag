@@ -14,10 +14,8 @@ module.exports = function(sequelize, DataTypes) {
           allowNull: false
         }
       });
-      UserCircle.belongsTo(models.Gift, {
-        foreignKey: {
-          allowNull: false
-        }
+      UserCircle.hasMany(models.Gift, {
+        onDelete: "cascade"
       });
     };
 

@@ -38,6 +38,7 @@ $(document).ready(function() {
       name: name,
       age: age,
       budget: budget,
+      interests: interests,
       userid: userid
     })
       .then(function(data) {
