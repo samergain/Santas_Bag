@@ -27,19 +27,6 @@ module.exports = function (app) {
       });
   });
 
-  // //receive userCircle info
-  // app.post("/api/usercircle", function(req, res) {
-  //   db.UserCircle.create({
-  //     name: req.body.name,
-  //     age: req.body.age,
-  //     budget: req.body.budget,
-  //   })
-  //     .then(function() {
-  //       res.redirect(307, "/api/gift");
-  //     })
-
-  // });
-
   // Route for logging user out
   app.get("/logout", function (req, res) {
     req.logout();
@@ -61,6 +48,20 @@ module.exports = function (app) {
     }
   });
 
+  //Get gifts suggestions based on budget and interests
+  // app.get("/api/giftsSuggestions/:budget/:keywords", function(req, res) {
+  //     db.ItemStorage.findAll({
+  //       where: {
+  //         [Op.and] : [
+  //           {price: {[Op.lt] : req.params.budget} },
+  //           {keywords: {[Op.substring] : req.params.keywords}}
+  //         ]    
+  //       }
+  //     }).then(function(results) {
+  //       res.json(results);
+  //     });
+  // });
+  
   // Get all gifts from the table
   app.get("/api/getAllPersons/:id", function (req, res) {
     db.UserCircle.findAll({
@@ -73,6 +74,7 @@ module.exports = function (app) {
   });
 
 
+  
   // Get all gifts from the table
   app.get("/api/getOnePerson/:id", function (req, res) {
     db.UserCircle.findAll({
@@ -84,6 +86,7 @@ module.exports = function (app) {
     });
   });
 
+  
 
   //Route for adding userCirlce details to the table
   app.post("/api/addPerson", function (req, res) {
