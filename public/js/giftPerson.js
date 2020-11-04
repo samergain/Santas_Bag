@@ -3,14 +3,12 @@ $(document).ready(function() {
   var addPersonForm = $("form.addPerson");
   var userId;
   var emailInput = $("input#email-input");
-
   $.get("/api/user_data").then(function(data) {
     $(".member-name").text(data.email);
     userId = data.id;
     // findPersons(userId);
     $(".hiddenId").text(data.id);
   });
-
   // When the signup button is clicked, we validate the email and password are not blank
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
@@ -35,7 +33,6 @@ $(document).ready(function() {
     $("#interests").val("");
 
   });
-
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
   function addGiftPerson(name, age, interests, budget, userid) {
@@ -43,8 +40,8 @@ $(document).ready(function() {
     $.post("/api/addPerson", {
       name: name,
       age: age,
-      interests : interests,
       budget: budget,
+      interests: interests,
       userid: userid
     })
       .then(function(data) {
@@ -55,7 +52,6 @@ $(document).ready(function() {
       })
       .catch(handleLoginErr);
   }
-
   function handleLoginErr(err) {
     $("#alert .msg").text(err.responseJSON);
     $("#alert").fadeIn(500);
