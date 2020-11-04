@@ -60,32 +60,21 @@ $(document).ready(function() {
       });
 
       $(".search").click(function() {
-        $.ajax({
-          method: "GET",
-          url: "/api/getOnePerson/" + $(this).attr("data-id")
-        })
-          // On success, run the following code
-          .then(function(data) {
-            console.log("One Person Info pulled Successfully!");
-            storeUserDataInSession(data);
-            window.location.replace("/giftSearch");
-          });
+        console.log("Print GiftPerson ID:" , $(this).attr("data-id"));
+        window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
+        // $.ajax({
+        //   method: "GET",
+        //   url: "/api/getOnePerson/" + $(this).attr("data-id")
+        // })
+        //   // On success, run the following code
+        //   .then(function(data) {
+        //     console.log("One Person Info pulled Successfully!");
+        //     storeUserDataInSession(data);
+        //     //window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
+        //   });
       });
 
-      function storeUserDataInSession(data) {
-        //var userObjectString = JSON.stringify(userData);
-        window.sessionStorage.setItem('userObject',data);
-    }   
-      // function renderOnePerson(data){
-      //   if (data.length !== 0) {
-      //     $("#id").text(data[0].id);
-      //     $("#name").text(data[0].name);
-      //     $("#age").text(data[0].age);
-      //     $("#budget").text(data[0].budget);
-      //     $("#interests").text(data[0].keywords);
-      //   }
-      // }
-  
+    
     }
   }
 

@@ -91,7 +91,7 @@ module.exports = function(app) {
       age: parseInt(req.body.age),
       keywords: req.body.interests,
       budget: parseInt(req.body.budget),
-      userid: req.body.userid
+      UserId: req.body.userid
     })
       .then(function() {
         // res.redirect(307, "/giftSearch");

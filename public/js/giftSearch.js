@@ -7,31 +7,36 @@ $(document).ready(function () {
   //   email = data.email;
   //   userId = data.id;
   // });
-loadOnePersonInfo();
 
-function loadOnePersonInfo(){
-  var data = {
-    getUserDataFromSession: function () {
-      var userData = window.sessionStorage.getItem('userObject');
-      var stringgify = JSON.stringify(userData);
-      console.log(userData);
-      // return JSON.parse(userData);
-      return userData;
-    }
+  var url = window.location.search;
+  var userCircleId;
+  if (url.indexOf("?id=") !== -1) {
+    userCircleId = url.split("=")[1];
+    console.log("giftSearch file - userCircleId #1: ", userCircleId);
+    getPerson(userCircleId);
   }
-  var userDataObject = data.getUserDataFromSession();
-  console.log("userDataSession : ", userDataObject);
-  console.log("userDataSession.userData[0] : ", userDataObject.UserData[0]);
-  console.log("userDataSession.userData[0].id : ", userDataObject.UserData[0].id);
+  // If there's no authorId we just get all posts as usual
+  else {
+    getPerson(userCircleId)
+  }
 
-  // for (i = 0; i < userDataObject.UserData.length; i++) {
-    $("#id").text(userDataObject.UserData[0].id);
-        $("#name").text(userDataObject.UserData[0].name);
-        $("#age").text(userDataObject.UserData[0].age);
-        $("#budget").text(userDataObject.UserData[0].budget);
-        $("#interests").text(userDataObject.UserData[0].keywords);
-    // $('div').append('<p><span>' + userDataObject.UserData[i].Terms + ' : </span><span>' + userDataObject.UserData[i].Definitions + '</span></p>')
+
+function getPerson(userCircleId) {
+  // userCircleId = userCircleId || "";
+  // if (userCircleId) {
+  //   userCircleId = "/?id=" + userCircleId;
+  //   console.log("giftSearch file - userCircleId #2: ", userCircleId);
   // }
+  $.get("/api/getOnePerson/" + userCircleId, function(data) {
+    console.log("SelectedPerson", data);
+    if (data.length !== 0) {
+        $("#id").text(data[0].id);
+        $("#name").text(data[0].name);
+        $("#age").text(data[0].age);
+        $("#budget").text(data[0].budget);
+        $("#interests").text(data[0].keywords);
+    }
+  });
 }
   
 

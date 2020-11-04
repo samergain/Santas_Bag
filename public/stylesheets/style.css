@@ -31,6 +31,10 @@ input[type="checkbox"], input[type="radio"]{
   display: none;
 }
 
+.dispValue{
+ color: rgb(223, 56, 56);
+}
+
 .jumbotron{
   background-image: url("https://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/12/santa-claus-10.jpg");
 }
