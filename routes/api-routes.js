@@ -47,20 +47,6 @@ module.exports = function (app) {
       });
     }
   });
-
-  //Get gifts suggestions based on budget and interests
-  // app.get("/api/giftsSuggestions/:budget/:keywords", function(req, res) {
-  //     db.ItemStorage.findAll({
-  //       where: {
-  //         [Op.and] : [
-  //           {price: {[Op.lt] : req.params.budget} },
-  //           {keywords: {[Op.substring] : req.params.keywords}}
-  //         ]    
-  //       }
-  //     }).then(function(results) {
-  //       res.json(results);
-  //     });
-  // });
   
   // Get all gifts from the table
   app.get("/api/getAllPersons/:id", function (req, res) {
@@ -117,7 +103,19 @@ module.exports = function (app) {
       res.json(results);
     });
   });
-
+  //Get gifts suggestions based on budget and interests
+  // app.get("/api/giftsSuggestions/:budget/:keywords", function(req, res) {
+  //     db.ItemStorage.findAll({
+  //       where: {
+  //         [Op.and] : [
+  //           {price: {[Op.lt] : req.params.budget} },
+  //           {keywords: {[Op.substring] : req.params.keywords}}
+  //         ]    
+  //       }
+  //     }).then(function(results) {
+  //       res.json(results);
+  //     });
+  // });
   // Get all gifts from the table
   app.get("/api/matchInterest/:budget/:keywords", function (req, res) {
     console.log("api-route/matchInterest fucntion: ");
@@ -130,7 +128,8 @@ module.exports = function (app) {
           [Op.lte] : req.params.budget
         },  
         keywords: {
-          [Op.in] : [req.params.keywords]
+          //[Op.in] : [req.params.keywords]
+          [Op.substring] : req.params.keywords
         }
       }
     }).then(function (results) {
