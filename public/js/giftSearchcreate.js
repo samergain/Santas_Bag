@@ -78,12 +78,12 @@ $(".addGift").click(function(event) {
 })
 
 // Need function to send post request to server
-function addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.url[btnID]) {
+function addGiftBtn(giftTitle, giftPrice, giftHref) {
     console.log("function addGiftBtn called");
     $.post("/api/addPerson", {
-      title: giftObj.title[btnID],
-      price: giftObj.current_price[btnID],
-      url : giftObj.url[btnID]
+      title: giftTitle,
+      price: giftPrice,
+      href : giftHref
     })
       .then(function(data) {
         console.log("addedGiftBtn", data);
