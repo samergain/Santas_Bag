@@ -1,9 +1,8 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Getting references to our form and input
   var userId;
-  var emailInput = $("input#email-input");
-
-  $.get("/api/user_data").then(function(data) {
+  
+  $.get("/api/user_data").then(function (data) {
     $(".member-name").text(data.email);
     userId = data.id;
     findPersons(userId);
@@ -15,57 +14,91 @@ $(document).ready(function() {
   // Otherwise we log any errors
   function findPersons(userId) {
     console.log("function findPersons called for userId: ", userId);
-    $.get("/api/getAllPersons/" + userId, function(data){
+    $.get("/api/getAllPersons/" + userId, function (data) {
       console.log(data);
       renderGiftPersons(data);
     });
   }
 
-  function renderGiftPersons(data) {
- 
+  async function renderGiftPersons(data) {
+
+    let totalPrice;
+    let totalgiftCount;
+
     if (data.length !== 0) {
-  
       $("#stats").empty();
       $("#stats").show();
-  
+
       for (var i = 0; i < data.length; i++) {
-  
+
+        let totalInfo = await getTotalCost(data[i].id);
+
+        console.log("totalInfo from Function: ", totalInfo);
+
         var div = $("<div>");
-  
+
         div.append("<h5>" + data[i].name + "</h5>");
-        div.append("<p>Id: " + data[i].id + "</p>");
+        // div.append("<p>Id: " + data[i].id + "</p>");
         div.append("<p>Age: " + data[i].age + "</p>");
         div.append("<p>Budget: " + data[i].budget + "</p>");
         div.append("<p>Interests: " + data[i].keywords + "</p>");
-        div.append("<button class='delete' data-id='" + data[i].id + "'>DELETE PERSON</button>");
-        div.append("<button class='search' data-id='" + data[i].id + "'>SEARCH GIFT</button>");
-        
+        div.append("<b><p>Gift Info, if any...</p></b>");
+        div.append("<p>Total Gifts Selected: " + totalgiftCount + "</p>");
+        div.append("<p>Total Expense: " + totalPrice + "</p>");
+        div.append("<button class='delete btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-trash'></span> DELETE PERSON</button>");
+        div.append("<span>      </span>");
+        div.append("<button class='search btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-search'></span> SEARCH GIFT</button>");
+
         $("#stats").append(div);
-  
+
       }
-  
-      $(".delete").click(function() {
-  
-        $.ajax({
-          method: "UPDATE",
-          url: "/api/personGift/" + $(this).attr("data-id")
+
+      function getTotalCost(id){
+        return $.ajax({
+          method: "GET",
+          url: "/api/getTotalCost/" + id
         })
           // On success, run the following code
-          .then(function() {
-            console.log("Gift Added Successfully!");
+          .then(function (results) {
+            console.log("Group Results: ", results);
+            totalPrice = results[0].total_amount;
+            totalgiftCount = results[0].total_gifts;
+            console.log("TotalPrice: ", results[0].total_amount);
+            console.log("TotlGift: ", results[0].total_gifts);
+            return results;
+          }).catch(function(err){
+            console.log("Error on getTotalCost request in viewPerson.js:" , err);
           });
-  
-        $(this).closest("div").remove();
-  
+    
+      }
+
+      $(".delete").click(function () {
+        $.ajax({
+          method: "DELETE",
+          url: "/api/delPerson/" + $(this).attr("data-id") + "/" + userId
+        })
+          // On success, run the following code
+          .then(function (response) {
+            console.log("delete respons: ", response);
+            window.location.replace("/viewPerson");
+          }).catch(function(err){
+            console.log("Error on DELETE: ", err);
+            alert("Unauthorized Delete! You may have Gifts assocaited with this User.");
+          });
+
+        //$(this).closest("div").remove();
       });
 
-      $(".search").click(function() {
-        console.log("Print GiftPerson ID:" , $(this).attr("data-id"));
+
+      $(".search").click(function () {
+        console.log("Print GiftPerson ID:", $(this).attr("data-id"));
         window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
       });
 
-    
+
     }
   }
+
+  
 
 });

@@ -29,11 +29,13 @@ $(document).ready(function() {
       password: password
     })
       .then(function() {
-        window.location.replace("/viewPerson");
+        window.location.replace("/viewPerson.html");
         // If there's an error, log the error
       })
       .catch(function(err) {
         console.log(err);
+        alert("You seem to be a New User. Please Sign Up!");
+        window.location.replace("/signup.html");
       });
   }
 });
