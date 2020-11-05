@@ -83,7 +83,7 @@ function addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.
     $.post("/api/addPerson", {
       title: giftObj.title[btnID],
       price: giftObj.current_price[btnID],
-      url : giftObj.url[btnID]
+      href : giftObj.url[btnID]
     })
       .then(function(data) {
         console.log("addedGiftBtn", data);
