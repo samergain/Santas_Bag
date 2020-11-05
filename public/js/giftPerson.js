@@ -3,12 +3,16 @@ $(document).ready(function() {
   var addPersonForm = $("form.addPerson");
   var userId;
   var emailInput = $("input#email-input");
+
+
   $.get("/api/user_data").then(function(data) {
     $(".member-name").text(data.email);
     userId = data.id;
     // findPersons(userId);
     $(".hiddenId").text(data.id);
   });
+
+
   // When the signup button is clicked, we validate the email and password are not blank
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
@@ -25,14 +29,18 @@ $(document).ready(function() {
     if (!userCircleData.name)  {
       return;
     }
+
+
     // If we have an email and password, run the signUpUser function
     addGiftPerson(userCircleData.name, userCircleData.age, userCircleData.interests, userCircleData.budget, userCircleData.userid);
     $("#nameInput").val("");
     $("#ageInput").val("");
     $("#priceInput").val("");
-    $("#interests").val("");
+    $("#interestsInput").val("");
 
   });
+
+
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
   function addGiftPerson(name, age, interests, budget, userid) {
@@ -46,9 +54,9 @@ $(document).ready(function() {
     })
       .then(function(data) {
         console.log("addedGiftPErson", data);
-        window.location.replace("/giftPerson");
-        // window.location.replace("/giftSearch");
-        // If there's an error, handle it by throwing up a bootstrap alert
+        //alert("New Gift Person Added Successfully!");
+        $("#alert .msg").text("New Gift Person Added Successfully!");
+        window.location.replace("/giftSearch.html?id=" + data.id);
       })
       .catch(handleLoginErr);
   }

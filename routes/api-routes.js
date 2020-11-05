@@ -48,20 +48,6 @@ module.exports = function (app) {
     }
   });
 
-  //Get gifts suggestions based on budget and interests
-  // app.get("/api/giftsSuggestions/:budget/:keywords", function(req, res) {
-  //     db.ItemStorage.findAll({
-  //       where: {
-  //         [Op.and] : [
-  //           {price: {[Op.lt] : req.params.budget} },
-  //           {keywords: {[Op.substring] : req.params.keywords}}
-  //         ]    
-  //       }
-  //     }).then(function(results) {
-  //       res.json(results);
-  //     });
-  // });
-  
   // Get all gifts from the table
   app.get("/api/getAllPersons/:id", function (req, res) {
     db.UserCircle.findAll({
@@ -74,7 +60,6 @@ module.exports = function (app) {
   });
 
 
-  
   // Get all gifts from the table
   app.get("/api/getOnePerson/:id", function (req, res) {
     db.UserCircle.findAll({
@@ -86,7 +71,6 @@ module.exports = function (app) {
     });
   });
 
-  
 
   //Route for adding userCirlce details to the table
   app.post("/api/addPerson", function (req, res) {
@@ -97,9 +81,24 @@ module.exports = function (app) {
       budget: parseInt(req.body.budget),
       UserId: req.body.userid
     })
-      .then(function () {
-        // res.redirect(307, "/giftSearch");
-        res.redirect("/giftSearch");
+      .then(function (results) {
+        res.json(results);
+      })
+      .catch(function (err) {
+        res.status(401).json(err);
+      });
+  });
+
+  //Route for adding userCirlce details to the table
+  app.post("/api/saveFavGift", function (req, res) {
+    db.ItemStorage.create({
+      name: req.body.name,
+      price: parseInt(req.body.price),
+      keywords: req.body.interests,
+      href: req.body.href
+    })
+      .then(function (results) {
+        res.json(results);
       })
       .catch(function (err) {
         res.status(401).json(err);
@@ -120,22 +119,72 @@ module.exports = function (app) {
 
   // Get all gifts from the table
   app.get("/api/matchInterest/:budget/:keywords", function (req, res) {
-    console.log("api-route/matchInterest fucntion: ");
-    console.log("budget: ", req.params.budget);
-    console.log("keywords: ", req.params.keywords);
-
     db.ItemStorage.findAll({
       where: {
-        price: {
-          [Op.lte] : req.params.budget
-        },  
-        keywords: {
-          [Op.in] : [req.params.keywords]
-        }
+        [Op.and]: [
+          { price: { [Op.lt]: req.params.budget } },
+          { keywords: { [Op.substring]: req.params.keywords } }
+        ]
       }
     }).then(function (results) {
       res.json(results);
     });
   });
+
+
+  //Route for adding userCirlce details to the table
+  app.post("/api/addPersonGift", function (req, res) {
+    db.Gift.create({
+      name: req.body.name,
+      price: parseInt(req.body.price),
+      href: req.body.href,
+      UserCircleId: req.body.id
+    })
+      .then(function (results) {
+        res.json(results);
+      })
+      .catch(function (err) {
+        res.status(401).json(err);
+      });
+  });
+
+
+    // Get all gifts from the table
+    app.get("/api/dispChosenGifts/:id", function (req, res) {
+      db.Gift.findAll({
+        where: {
+          UserCircleId: req.params.id
+        }
+      }).then(function (results) {
+        res.json(results);
+      });
+    });
+
+    app.delete("/api/delPersonGift/:UserCircleId/:giftId", function (req, res) {
+      let saveUserCircleId = req.params.UserCircleId;
+      db.Gift.destroy({
+        where: {
+          UserCircleId: req.params.UserCircleId,
+          id: req.params.giftId
+        }
+      }).then(function (response) {
+        console.log("Deleted Successfully", saveUserCircleId);
+        res.json(response);
+      })
+    });
+
+    app.delete("/api/delPerson/:id/:userid", function (req, res) {
+      db.UserCircle.destroy({
+        where: {
+          id: req.params.id,
+          UserId: req.params.userid
+        }
+      }).then(function (response) {
+        res.json(response);
+      }).catch(function(err){
+        res.status(401).json(err);
+      })
+    });
+
 
 };

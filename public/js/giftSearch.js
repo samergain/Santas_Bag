@@ -1,14 +1,28 @@
 $(document).ready(function () {
   // Getting references to our form and input
-  var searchGift = $("form.searchGift");
 
+  var searchGift = $("form.searchGift");
+  var userId;
   var url = window.location.search;
   var userCircleId;
-  if (url.indexOf("?id=") !== -1) {
-    userCircleId = url.split("=")[1];
-    console.log("giftSearch file - userCircleId #1: ", userCircleId);
-    getPerson(userCircleId);
+
+
+  $.get("/api/user_data").then(function (data) {
+    userId = data.id;
+  });
+
+  userCircleId = deriveIdFromQueryString();
+  getPerson(userCircleId);
+
+  function deriveIdFromQueryString(){
+    if (url.indexOf("?id=") !== -1) {
+      userCircleId = url.split("=")[1];
+      console.log("giftSearch file - userCircleId #1: ", userCircleId);
+      return userCircleId;
+      // getPerson(userCircleId);
+    }
   }
+
 
   function getPerson(userCircleId) {
     $.get("/api/getOnePerson/" + userCircleId, function (data) {
@@ -30,7 +44,7 @@ $(document).ready(function () {
       console.log("Match results in giftSearch: ", data);
 
       if (data.length !== 0) {
-        var col = ["GIFT ID", "NAME", "CATEGORY", "PRICE", "HREF", "Choose One Gift"];
+        var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Choose One Gift"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
         for (var i = 0; i < col.length; i++) {
@@ -46,20 +60,19 @@ $(document).ready(function () {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = data[i].category;
-          var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].price;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
           var tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
+          // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
+          tabCell.innerHTML = "<button class='addGift green darken-3' data-id='" + data[i].id + "' giftName='" + data[i].name + "'  giftPrice='" + data[i].price + "' giftHREF='" + data[i].href + "'>CHOOSE GIFT</button>";
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
         var divContainer = document.getElementById("matchResult");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
-      }else{
+      } else {
         var para = document.createElement("p");
         para.innerHTML = "No Matching Criteria";
         var divContainer = document.getElementById("matchResult");
@@ -69,9 +82,95 @@ $(document).ready(function () {
       }
 
       $(".addGift").click(function () {
-        console.log("Add Gift to Person:", $(this).attr("data-id"));
-        //window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
+        console.log("Add Gift to Person: data-ID" + $(this).attr("data-id"));
+        console.log("UsrId: " + userId);
+        console.log("giftName: ", $(this).attr("giftName"));
+        console.log("giftPrice: ", $(this).attr("giftPrice"));
+        console.log("giftHREF: ", $(this).attr("giftHREF"));
+        addPersonGift(userId, $(this).attr("giftName"), $(this).attr("giftPrice"),  $(this).attr("giftHREF"));
       });
+
+
+    });
+  }
+
+  
+  // Otherwise we log any errors
+  function addPersonGift(userCircleId, giftName, giftPrice, giftHREF) {
+    console.log("function addPerson Gift called");
+    $.post("/api/addPersonGift", {
+      id: userCircleId,
+      name: giftName,
+      price: giftPrice,
+      href: giftHREF
+    })
+      .then(function (data) {
+        console.log("addedPersonGift", data);
+        $("#alert .msg").text("Gift Added to Selected person Successfully!");
+        window.location.replace("/giftSearch.html?id=" + data.UserCircleId);
+      })
+      .catch(handleLoginErr);
+  }
+  
+  dispGiftList(userCircleId);
+
+  function dispGiftList(userCircleId) {
+    console.log("within disp Gift List: " + "userCircleId: " + userCircleId);
+    $.get("/api/dispChosenGifts/" + userCircleId, function (data) {
+      console.log("Match results in giftSearch: ", data);
+
+      if (data.length !== 0) {
+        var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Click to Remove"];
+        var table = document.createElement("table");
+        var tr = table.insertRow(-1);                   // TABLE ROW.
+        for (var i = 0; i < col.length; i++) {
+          var th = document.createElement("th");      // TABLE HEADER.
+          th.innerHTML = col[i];
+          tr.appendChild(th);
+        }
+        // ADD JSON DATA TO THE TABLE AS ROWS.
+        for (var i = 0; i < data.length; i++) {
+          tr = table.insertRow(-1);
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i].id;
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i].name;
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = data[i].price;
+          var tabCell = tr.insertCell(-1);
+          tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
+          var tabCell = tr.insertCell(-1);
+          // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
+          tabCell.innerHTML = "<button class='deleteGift green darken-3' data-id='" + data[i].id + "'>REMOVE GIFT</button>";
+        }
+
+        // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+        var divContainer = document.getElementById("giftList");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+      } else {
+        var para = document.createElement("p");
+        para.innerHTML = "No Matching Criteria";
+        var divContainer = document.getElementById("giftList");
+        divContainer.innerHTML = "";
+        divContainer.style.color = "rgb(223, 56, 56)";
+        divContainer.appendChild(para);
+      }
+
+      $(".deleteGift").click(function () {
+        console.log("delete Person: data-ID" + $(this).attr("data-id"));
+        $.ajax({
+          method: "DELETE",
+          url: "/api/delPersonGift/" + userCircleId + "/" + $(this).attr("data-id")
+        })
+          .then(function (data) {
+            userCircleId = deriveIdFromQueryString();
+            window.location.replace("/giftSearch.html?id=" + userCircleId);
+          })
+          .catch(handleLoginErr);
+      });
+
+
     });
   }
 
@@ -103,12 +202,9 @@ $(document).ready(function () {
 
   function renderGifts(data) {
     if (data.length !== 0) {
-
       $("#srchedResult").empty();
       $("#srchedResult").show();
-
       for (var i = 0; i < data.length; i++) {
-
         var div = $("<div>");
 
         div.append("<h2>" + data[i].title + "</h2>");
@@ -121,21 +217,6 @@ $(document).ready(function () {
         $("#srchedResult").append(div);
 
       }
-
-      // $(".select").click(function() {
-
-      //   $.ajax({
-      //     method: "UPDATE",
-      //     url: "/api/personGift/" + $(this).attr("data-id")
-      //   })
-      //     // On success, run the following code
-      //     .then(function() {
-      //       console.log("Gift Added Successfully!");
-      //     });
-
-      //   //$(this).closest("div").remove();
-
-      // });
 
     }
   }
