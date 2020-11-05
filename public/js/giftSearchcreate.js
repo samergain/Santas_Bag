@@ -18,7 +18,7 @@ $("#submitBtn").click(function (event) {
         "url": `https://rapidapi.p.rapidapi.com/product/search?keyword=${giftItems}&country=US`,
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "",
+            "x-rapidapi-key": "54074322c0msh944e5717174710ep17a819jsn5a335847116d",
             "x-rapidapi-host": "amazon-product-reviews-keywords.p.rapidapi.com"
         }
     };
@@ -49,6 +49,7 @@ function displayCards(giftObj) {
         img.attr("src", giftObj.thumbnail[i]);
         let btnTag = $("<button>");
         btnTag.attr("class", "btn btn-default addGift");
+        btnTag.text("Add Gift!");
         let aTag = $("<a>");
         aTag.attr("href", giftObj.url[i]);
         aTag.text(giftObj.title[i]);
@@ -59,8 +60,8 @@ function displayCards(giftObj) {
         pTag.text(giftObj.current_price[i]);
 
         d1.append(d2);
-        d1.append(btnTag);
         d1.append(img);
+        d1.append(btnTag);
         d2.append(hFive);
         hFive.append(aTag);
         d2.append(pTag);
