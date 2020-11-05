@@ -30,27 +30,30 @@
   </nav>
   <div class="container red darken-4 ">
     <div class="jumbotron" style="margin-top:0">
-      <h1 style="text-shadow: 2px 2px gray; color: red" class="jumbotronic">Santa's Bag!!! Ho! Ho! Ho!</h1>
+      <h1 style="text-shadow: 2px 2px white; color: red" class="jumbotronic">Santa's Bag!!! Ho! Ho! Ho!</h1>
       <h6 style=" text-shadow: 1px 1px gray; color:white">Track your Christmas Shopping List !!!</h6>
     </div>
     <div class="row">
-      <!-- <h3>Welcome! <span id="memberEmail" class="member-name"></span></h3> -->
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
             <div class="well" id="buttons">
-              <a href="/viewPerson" class="btn btn-danger btn-lg"><span class="fa fa-eye"></span> View Your Circle</a>
-              <a href="/giftPerson" class="btn btn-danger btn-lg"> <span class="fa fa-plus"></span> Add Person to Your
-                Circle</a>
+              <a href="/viewPerson" class="btn btn-danger btn-lg green darken-3"><span class="fa fa-eye"></span> View
+                Your Circle</a>
+              <a href="/giftPerson" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add
+                Person to Your Circle</a>
+              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add Fav
+                Gifts</a>
+              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-eye"></span> View Fav
+                Gifts</a>
               <br><br>
-              <b>
+              <!-- <b>
                 <p class="categories">Choose any Categories, if interested to further filter the results:</p>
               </b>
               <input type="checkbox" name="electronic" value="electronic">Electronics</input>
               <input type="checkbox" name="outdoor" value="outdoor">Outdoors</input>
-              <input type="checkbox" name="toy" value="toy">Toys</input>
+              <input type="checkbox" name="toy" value="toy">Toys</input> -->
 
-              <!-- <a href="/giftPerson" class="btn btn-danger btn-lg"> <span class="fa fa-eye"></span> Search for Gift Items</a> -->
             </div>
           </div>
         </div>
@@ -86,7 +89,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12" id="srchedResult">
+      <div class="col-md-6" id="srchedResult">
         <div class="card">
           <div class="card-header">
             <h5>Suggestions based on the criteria ...</h5>
@@ -97,35 +100,49 @@
           </div>
         </div>
       </div>
+      <!-- </div>
 
-      <div class="row">
-        <div class="col-md-12" id="srchedResult">
-          <div class="card">
-            <div class="card-header">
-              <h5>Keyword Search ...</h5>
+    <div class="row"> -->
+      <div class="col-md-6" id="giftListCol">
+        <div class="card">
+          <div class="card-header">
+            <h5>Chosen Gift List ...</h5>
+          </div>
+          <div class="card-body">
+            <div id="giftList">
             </div>
-            <div class="card-body">
-              <form class="searchGift">
-                <div class="form-group">
-                  <!-- <label for="searchCriteria">Search For Gift Item</label> -->
-                  <input type="text" class="form-control" id="srchInput" placeholder="Additional Keyword">
-                </div>
-
-                <div style="display: none" id="alert" class="alert alert-danger" role="alert">
-                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                  <span class="sr-only">Error:</span> <span class="msg"></span>
-                </div>
-                <button type="submit" id="submitBtn" class="btn btn-default">Search</button>
-              </form>
-            </div>
-            <div class="result"></div>
           </div>
         </div>
       </div>
+    </div>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <script type="text/javascript" src="js/giftSearch.js"></script>
-      <script type="text/javascript" src="js/giftSearchCreate.js"></script>
+    <div class="row">
+      <div class="col-md-12" id="srchedResult">
+        <div class="card">
+          <div class="card-header">
+            <h5>Search the Web...</h5>
+          </div>
+          <div class="card-body">
+            <form class="searchGift">
+              <div class="form-group">
+                <input type="text" class="form-control" id="srchInput" placeholder="Keyword">
+              </div>
+
+              <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only">Error:</span> <span class="msg"></span>
+              </div>
+              <button type="submit" id="submitBtn" class="btn btn-default green darken-3">Search</button>
+            </form>
+          </div>
+          <div class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/giftSearch.js"></script>
+    <script type="text/javascript" src="js/giftSearchCreate.js"></script>
 
 </body>
 

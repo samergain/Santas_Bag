@@ -35,4 +35,8 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/giftPerson.html"));
   });
 
+  app.get("/saveFavs", isAuthenticated, function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/saveFavs.html"));
+  });
+
 };
