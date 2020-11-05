@@ -53,6 +53,7 @@ function displayCards(giftObj) {
         btnTag.text("Add Gift!");
         let aTag = $("<a>");
         aTag.attr("href", giftObj.url[i]);
+        aTag.attr("target", "_blank");
         aTag.text(giftObj.title[i]);
         let hFive = $("<h5>");
         hFive.attr("class", "card-title");
@@ -69,27 +70,33 @@ function displayCards(giftObj) {
         $(".result").append(d1);
     }   
 }
+let url = window.location.search;
+let userCircleId;
+    if (url.indexOf("?id=") !== -1) {
+      userCircleId = url.split("=")[1];
+      console.log("giftSearch file - userCircleId #1: ", userCircleId);
+    }
 
 $(".addGift").click(function(event) {
     event.preventDefault();
     let btnID = $(this).attr("data-id");
     console.log("clicked button");
-    addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.url[btnID]);
+    addGiftBtn(giftObj.title[btnID], userCircleId, giftObj.current_price[btnID], giftObj.url[btnID]);
 })
 
-// Need function to send post request to server
-function addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.url[btnID]) {
+function addGiftBtn(giftTitle, giftUserId, giftPrice, giftHref) {
     console.log("function addGiftBtn called");
-    $.post("/api/addPerson", {
-      title: giftObj.title[btnID],
-      price: giftObj.current_price[btnID],
-      href : giftObj.url[btnID]
+    $.post("/api/addPersonGift", {
+      name: giftTitle,
+      UserCircleId : giftUserId,
+      price: giftPrice,
+      href : giftHref,
     })
       .then(function(data) {
         console.log("addedGiftBtn", data);
         window.location.replace("/giftPerson");
         // window.location.replace("/giftSearch");
-        // If there's an error, handle it by throwing up a bootstrap alert
+
       })
       .catch(handleLoginErr);
   }
