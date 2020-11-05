@@ -31,7 +31,6 @@ $(document).ready(function() {
     $("#ageInput").val("");
     $("#priceInput").val("");
     $("#interests").val("");
-
   });
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
