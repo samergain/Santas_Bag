@@ -21,11 +21,21 @@ $(document).ready(function () {
   }
 
   function renderGiftPersons(data) {
+
+    let totalPrice;
+    let totalgiftCount;
+
     if (data.length !== 0) {
       $("#stats").empty();
       $("#stats").show();
 
       for (var i = 0; i < data.length; i++) {
+
+        $.get("/api/getTotalCost/" + data[i].id, function (results) {
+          console.log(results);
+          totalPrice = results.total_amount;
+          totalgiftCount = results.total_gifts;
+        });
 
         var div = $("<div>");
 
@@ -34,6 +44,9 @@ $(document).ready(function () {
         div.append("<p>Age: " + data[i].age + "</p>");
         div.append("<p>Budget: " + data[i].budget + "</p>");
         div.append("<p>Interests: " + data[i].keywords + "</p>");
+        div.append("<b><p>Gift Info, if any...</p></b>");
+        div.append("<p>Total Gifts Selected: " + totalgiftCount + "</p>");
+        div.append("<p>Total Expense: " + totalPrice + "</p>");
         div.append("<button class='delete btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-trash'></span> DELETE PERSON</button>");
         div.append("<span>      </span>");
         div.append("<button class='search btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-search'></span> SEARCH GIFT</button>");
@@ -68,5 +81,7 @@ $(document).ready(function () {
 
     }
   }
+
+
 
 });

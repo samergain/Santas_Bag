@@ -1,7 +1,7 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
-const { Op } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -185,6 +185,26 @@ module.exports = function (app) {
         res.status(401).json(err);
       })
     });
+
+
+    app.get("/api/getTotalCost/:id", function (req, res) {
+      db.Gift.findAll({
+        attributes: ['UserCircleId',
+          [sequelize.fn('sum', sequelize.col('price')), 'total_amount'],
+          [sequelize.fn('count', sequelize.col('id')), 'total_gifts'],
+        ],
+        group : ['UserCircleId'],
+      }).then(function (results) {
+        res.send(results);
+      });
+    });
+      // const totalAmount = await DONATIONS.findAll({
+  //   attributes: [
+  //     'member_id',
+  //     [sequelize.fn('sum', sequelize.col('amount')), 'total_amount'],
+  //   ],
+  //   group: ['member_id'],
+  // });
 
 
 };
