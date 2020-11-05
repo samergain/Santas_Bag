@@ -24,6 +24,7 @@ $("#submitBtn").click(function (event) {
     };
 
     $.ajax(settings).done(function (response) {
+        console.log(response);
         for (let i = 0; (i < response.products.length && i < 10); i++) {
             const giftInfo = response.products[i];
             console.log(giftItems);
@@ -39,7 +40,6 @@ $("#submitBtn").click(function (event) {
 function displayCards(giftObj) {
     console.log(giftObj)
      for (let i = 0; i < giftObj.thumbnail.length; i++) {
-
         let d1 = $("<div>");
         d1.attr("class", "card");
         let d2 = $("<div>");
@@ -95,8 +95,6 @@ function addGiftBtn(giftTitle, giftUserId, giftPrice, giftHref) {
       .then(function(data) {
         console.log("addedGiftBtn", data);
         window.location.replace("/giftPerson");
-        // window.location.replace("/giftSearch");
-
       })
       .catch(handleLoginErr);
   }
