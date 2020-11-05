@@ -39,8 +39,8 @@ $(document).ready(function() {
     $.post("/api/addPerson", {
       name: name,
       age: age,
-      interests : interests,
       budget: budget,
+      interests: interests,
       userid: userid
     })
       .then(function(data) {

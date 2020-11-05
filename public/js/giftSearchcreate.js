@@ -77,3 +77,24 @@ $(".addGift").click(function(event) {
     addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.url[btnID]);
 })
 
+// Need function to send post request to server
+function addGiftBtn(giftObj.title[btnID], giftObj.current_price[btnID], giftObj.url[btnID]) {
+    console.log("function addGiftBtn called");
+    $.post("/api/addPerson", {
+      title: giftObj.title[btnID],
+      price: giftObj.current_price[btnID],
+      url : giftObj.url[btnID]
+    })
+      .then(function(data) {
+        console.log("addedGiftBtn", data);
+        window.location.replace("/giftPerson");
+        // window.location.replace("/giftSearch");
+        // If there's an error, handle it by throwing up a bootstrap alert
+      })
+      .catch(handleLoginErr);
+  }
+  function handleLoginErr(err) {
+    $("#alert .msg").text(err.responseJSON);
+    $("#alert").fadeIn(500);
+  }
+

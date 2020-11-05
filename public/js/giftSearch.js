@@ -1,39 +1,79 @@
 $(document).ready(function () {
     // Getting references to our form and input
     var searchGift = $("form.searchGift");
-    // var userId;
   
-    // $.get("/api/user_data").then(function(data) {
-    //   email = data.email;
-    //   userId = data.id;
-    // });
-  loadOnePersonInfo();
-  
-  function loadOnePersonInfo(){
-    var data = {
-      getUserDataFromSession: function () {
-        var userData = window.sessionStorage.getItem('userObject');
-        var stringgify = JSON.stringify(userData);
-        console.log(userData);
-        // return JSON.parse(userData);
-        return userData;
-      }
+    var url = window.location.search;
+    var userCircleId;
+    if (url.indexOf("?id=") !== -1) {
+      userCircleId = url.split("=")[1];
+      console.log("giftSearch file - userCircleId #1: ", userCircleId);
+      getPerson(userCircleId);
     }
-    var userDataObject = data.getUserDataFromSession();
-    console.log("userDataSession : ", userDataObject);
-    console.log("userDataSession.userData[0] : ", userDataObject.UserData[0]);
-    console.log("userDataSession.userData[0].id : ", userDataObject.UserData[0].id);
   
-    // for (i = 0; i < userDataObject.UserData.length; i++) {
-      $("#id").text(userDataObject.UserData[0].id);
-          $("#name").text(userDataObject.UserData[0].name);
-          $("#age").text(userDataObject.UserData[0].age);
-          $("#budget").text(userDataObject.UserData[0].budget);
-          $("#interests").text(userDataObject.UserData[0].keywords);
-      // $('div').append('<p><span>' + userDataObject.UserData[i].Terms + ' : </span><span>' + userDataObject.UserData[i].Definitions + '</span></p>')
-    // }
-  }
-    
+    function getPerson(userCircleId) {
+      $.get("/api/getOnePerson/" + userCircleId, function (data) {
+        console.log("SelectedPerson", data);
+        if (data.length !== 0) {
+          $("#id").text(data[0].id);
+          $("#name").text(data[0].name);
+          $("#age").text(data[0].age);
+          $("#budget").text(data[0].budget);
+          $("#interests").text(data[0].keywords);
+        }
+        matchInterest(data[0].budget, data[0].keywords);
+      });
+    }
+  
+    function matchInterest(budget, keywords) {
+      console.log("within Match interest function: " + "budget: " + budget + "keyword: " + keywords);
+      $.get("/api/matchInterest/" + budget + "/" + keywords, function (data) {
+        console.log("Match results in giftSearch: ", data);
+  
+        if (data.length !== 0) {
+          var col = ["GIFT ID", "NAME", "CATEGORY", "PRICE", "HREF", "Choose One Gift"];
+          var table = document.createElement("table");
+          var tr = table.insertRow(-1);                   // TABLE ROW.
+          for (var i = 0; i < col.length; i++) {
+            var th = document.createElement("th");      // TABLE HEADER.
+            th.innerHTML = col[i];
+            tr.appendChild(th);
+          }
+          // ADD JSON DATA TO THE TABLE AS ROWS.
+          for (var i = 0; i < data.length; i++) {
+            tr = table.insertRow(-1);
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i].id;
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i].name;
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i].category;
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = data[i].price;
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
+            var tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
+          }
+  
+          // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+          var divContainer = document.getElementById("matchResult");
+          divContainer.innerHTML = "";
+          divContainer.appendChild(table);
+        }else{
+          var para = document.createElement("p");
+          para.innerHTML = "No Matching Criteria";
+          var divContainer = document.getElementById("matchResult");
+          divContainer.innerHTML = "";
+          divContainer.style.color = "rgb(223, 56, 56)";
+          divContainer.appendChild(para);
+        }
+  
+        $(".addGift").click(function () {
+          console.log("Add Gift to Person:", $(this).attr("data-id"));
+          //window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
+        });
+      });
+    }
   
     // When the signup button is clicked, we validate the email and password are not blank
     searchGift.on("submit", function (event) {
