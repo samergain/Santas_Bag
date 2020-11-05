@@ -92,7 +92,22 @@ module.exports = function (app) {
       });
   });
 
-
+//
+  app.post("/api/saveGift", function (req, res) {
+  db.Gift.create({
+    name: req.body.name,
+    price: req.body.price,
+    href: req.body.href,
+    UserCircleId: req.body.userid
+  })
+    .then(function () {
+      // res.redirect(307, "/giftSearch");
+      res.redirect("/giftSearch");
+    })
+    .catch(function (err) {
+      res.status(401).json(err);
+    });
+});
   // Get all gifts from the table
   app.get("/api/giftSearch/:srchItem", function (req, res) {
     db.ItemStorage.findAll({

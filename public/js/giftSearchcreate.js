@@ -4,7 +4,7 @@ let giftObj = {
     current_price: [],
     url: []
 };
-
+//let userCircleId = $(??????`)
 $("#submitBtn").click(function (event) {
     event.preventDefault();
     console.log("inside");
@@ -80,10 +80,11 @@ $(".addGift").click(function(event) {
 // Need function to send post request to server
 function addGiftBtn(giftTitle, giftPrice, giftHref) {
     console.log("function addGiftBtn called");
-    $.post("/api/addPerson", {
-      title: giftTitle,
+    $.post("/api/saveGift", {
+      name: giftTitle,
       price: giftPrice,
-      href : giftHref
+      href : giftHref,
+      UserCircleId: "??????????????"
     })
       .then(function(data) {
         console.log("addedGiftBtn", data);
