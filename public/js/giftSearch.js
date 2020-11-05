@@ -44,7 +44,8 @@ $(document).ready(function () {
       console.log("Match results in giftSearch: ", data);
 
       if (data.length !== 0) {
-        var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Choose One Gift"];
+        //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Choose One Gift"];
+        var col = ["NAME", "PRICE", "HREF", "Choose One Gift"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
         for (var i = 0; i < col.length; i++) {
@@ -55,8 +56,8 @@ $(document).ready(function () {
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < data.length; i++) {
           tr = table.insertRow(-1);
-          var tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = data[i].id;
+          // var tabCell = tr.insertCell(-1);
+          // tabCell.innerHTML = data[i].id;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);
@@ -99,7 +100,7 @@ $(document).ready(function () {
   function addPersonGift(userCircleId, giftName, giftPrice, giftHREF) {
     console.log("function addPerson Gift called");
     $.post("/api/addPersonGift", {
-      id: userCircleId,
+      UserCircleId: userCircleId,
       name: giftName,
       price: giftPrice,
       href: giftHREF
@@ -120,7 +121,8 @@ $(document).ready(function () {
       console.log("Match results in giftSearch: ", data);
 
       if (data.length !== 0) {
-        var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Click to Remove"];
+        //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Click to Remove"];
+        var col = ["NAME", "PRICE", "HREF", "Click to Remove"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
         for (var i = 0; i < col.length; i++) {
@@ -131,8 +133,8 @@ $(document).ready(function () {
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < data.length; i++) {
           tr = table.insertRow(-1);
-          var tabCell = tr.insertCell(-1);
-          tabCell.innerHTML = data[i].id;
+          // var tabCell = tr.insertCell(-1);
+          // tabCell.innerHTML = data[i].id;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);

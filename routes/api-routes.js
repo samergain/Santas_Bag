@@ -1,7 +1,8 @@
 // Requiring our models and passport as we've configured it
 var db = require("../models");
 var passport = require("../config/passport");
-const { Sequelize, Op } = require("sequelize");
+const { Op } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 module.exports = function (app) {
   // Using the passport.authenticate middleware with our local strategy.
@@ -138,7 +139,7 @@ module.exports = function (app) {
       name: req.body.name,
       price: parseInt(req.body.price),
       href: req.body.href,
-      UserCircleId: req.body.id
+      UserCircleId: req.body.UserCircleId
     })
       .then(function (results) {
         res.json(results);
@@ -149,62 +150,63 @@ module.exports = function (app) {
   });
 
 
-    // Get all gifts from the table
-    app.get("/api/dispChosenGifts/:id", function (req, res) {
-      db.Gift.findAll({
-        where: {
-          UserCircleId: req.params.id
-        }
-      }).then(function (results) {
-        res.json(results);
-      });
+  // Get all gifts from the table
+  app.get("/api/dispChosenGifts/:id", function (req, res) {
+    db.Gift.findAll({
+      where: {
+        UserCircleId: req.params.id
+      }
+    }).then(function (results) {
+      res.json(results);
     });
+  });
 
-    app.delete("/api/delPersonGift/:UserCircleId/:giftId", function (req, res) {
-      let saveUserCircleId = req.params.UserCircleId;
-      db.Gift.destroy({
-        where: {
-          UserCircleId: req.params.UserCircleId,
-          id: req.params.giftId
-        }
-      }).then(function (response) {
-        console.log("Deleted Successfully", saveUserCircleId);
-        res.json(response);
-      })
+  // Get all gifts from the table
+  app.get("/api/allItemStorage", function (req, res) {
+    db.ItemStorage.findAll().then(function (results) {
+      res.json(results);
     });
+  });
 
-    app.delete("/api/delPerson/:id/:userid", function (req, res) {
-      db.UserCircle.destroy({
-        where: {
-          id: req.params.id,
-          UserId: req.params.userid
-        }
-      }).then(function (response) {
-        res.json(response);
-      }).catch(function(err){
-        res.status(401).json(err);
-      })
+  app.delete("/api/delPersonGift/:UserCircleId/:giftId", function (req, res) {
+    let saveUserCircleId = req.params.UserCircleId;
+    db.Gift.destroy({
+      where: {
+        UserCircleId: req.params.UserCircleId,
+        id: req.params.giftId
+      }
+    }).then(function (response) {
+      console.log("Deleted Successfully", saveUserCircleId);
+      res.json(response);
+    })
+  });
+
+  app.delete("/api/delPerson/:id/:userid", function (req, res) {
+    db.UserCircle.destroy({
+      where: {
+        id: req.params.id,
+        UserId: req.params.userid
+      }
+    }).then(function (response) {
+      res.json(response);
+    }).catch(function (err) {
+      res.status(401).json(err);
+    })
+  });
+
+
+  app.get("/api/getTotalCost/:id", function (req, res) {
+    db.Gift.findAll({
+      attributes: ['UserCircleId',
+        [Sequelize.fn('sum', Sequelize.col('price')), 'total_amount'],
+        [Sequelize.fn('count', Sequelize.col('id')), 'total_gifts'],
+      ],
+      group: ['UserCircleId']
+      //having: [Sequelize.where(Sequelize.fn([Op.eq],Sequelize.col('UserCircleId'),parseInt(req.params.id)))]
+    }).then(function (results) {
+      res.json(results);
     });
-
-
-    app.get("/api/getTotalCost/:id", function (req, res) {
-      db.Gift.findAll({
-        attributes: ['UserCircleId',
-          [sequelize.fn('sum', sequelize.col('price')), 'total_amount'],
-          [sequelize.fn('count', sequelize.col('id')), 'total_gifts'],
-        ],
-        group : ['UserCircleId'],
-      }).then(function (results) {
-        res.send(results);
-      });
-    });
-      // const totalAmount = await DONATIONS.findAll({
-  //   attributes: [
-  //     'member_id',
-  //     [sequelize.fn('sum', sequelize.col('amount')), 'total_amount'],
-  //   ],
-  //   group: ['member_id'],
-  // });
+  });
 
 
 };

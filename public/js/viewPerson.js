@@ -20,7 +20,7 @@ $(document).ready(function () {
     });
   }
 
-  function renderGiftPersons(data) {
+  async function renderGiftPersons(data) {
 
     let totalPrice;
     let totalgiftCount;
@@ -31,16 +31,14 @@ $(document).ready(function () {
 
       for (var i = 0; i < data.length; i++) {
 
-        $.get("/api/getTotalCost/" + data[i].id, function (results) {
-          console.log(results);
-          totalPrice = results.total_amount;
-          totalgiftCount = results.total_gifts;
-        });
+        let totalInfo = await getTotalCost(data[i].id);
+
+        console.log("totalInfo from Function: ", totalInfo);
 
         var div = $("<div>");
 
         div.append("<h5>" + data[i].name + "</h5>");
-        div.append("<p>Id: " + data[i].id + "</p>");
+        // div.append("<p>Id: " + data[i].id + "</p>");
         div.append("<p>Age: " + data[i].age + "</p>");
         div.append("<p>Budget: " + data[i].budget + "</p>");
         div.append("<p>Interests: " + data[i].keywords + "</p>");
@@ -53,6 +51,25 @@ $(document).ready(function () {
 
         $("#stats").append(div);
 
+      }
+
+      function getTotalCost(id){
+        return $.ajax({
+          method: "GET",
+          url: "/api/getTotalCost/" + id
+        })
+          // On success, run the following code
+          .then(function (results) {
+            console.log("Group Results: ", results);
+            totalPrice = results[0].total_amount;
+            totalgiftCount = results[0].total_gifts;
+            console.log("TotalPrice: ", results[0].total_amount);
+            console.log("TotlGift: ", results[0].total_gifts);
+            return results;
+          }).catch(function(err){
+            console.log("Error on getTotalCost request in viewPerson.js:" , err);
+          });
+    
       }
 
       $(".delete").click(function () {
@@ -82,6 +99,6 @@ $(document).ready(function () {
     }
   }
 
-
+  
 
 });
