@@ -22,7 +22,10 @@
   Each person you add should have a budget for gifts and interest, the app will use that info to generate suggestions of gifts.  
   Add some gifts to each person using the suggestions or direct search using our API.  
   The total expenses is display in a small red box and total expenses for each person is saved as well.  
-  You can try the app on heroku here: [Deployed App](https://santas-bag.herokuapp.com/).
+  You can try the app on heroku here: [Deployed App](https://santas-bag.herokuapp.com/).  
+  [![Demo](https://i.makeagif.com/media/11-06-2020/TOuKry.gif)](https://www.youtube.com/watch?v=anhtoBlPbDM)
+  
+
   
   ## License
   None
