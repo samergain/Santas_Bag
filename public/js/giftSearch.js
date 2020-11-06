@@ -17,39 +17,27 @@ $(document).ready(function () {
   function deriveIdFromQueryString(){
     if (url.indexOf("?id=") !== -1) {
       userCircleId = url.split("=")[1];
-      console.log("giftSearch file - userCircleId #1: ", userCircleId);
       return userCircleId;
-      // getPerson(userCircleId);
     }
   }
 
 
   function getPerson(userCircleId) {
     $.get("/api/getOnePerson/" + userCircleId, function (data) {
-      console.log("SelectedPerson", data);
       if (data.length !== 0) {
-        $("#id").text(data[0].id);
+        // $("#id").text(data[0].id);
         $("#name").text(data[0].name);
         $("#age").text(data[0].age);
         $("#budget").text(data[0].budget);
         $("#interests").text(data[0].keywords);
       }
-      // If we have an email and password, run the signUpUser function
-      getGifts(srchGift.srchInput);
-      $("#srchInput").val("");
+      matchInterest(data[0].budget, data[0].keywords);
     });
-  
-    // Does a post to the signup route. If successful, we are redirected to the members page
-    // Otherwise we log any errors
-    function getGifts(srchGift) {
-      console.log("function getGifts called");
-      $.get("/api/giftSearch/" + srchGift, function (data) {
-        console.log(data);
-        renderGifts(data);
-      });
-    }
-  
-    function renderGifts(data) {
+  }
+
+  function matchInterest(budget, keywords) {
+
+    $.get("/api/matchInterest/" + budget + "/" + keywords, function (data) {
       if (data.length !== 0) {
         //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Choose One Gift"];
         var col = ["NAME", "PRICE", "HREF", "Choose One Gift"];
@@ -73,7 +61,7 @@ $(document).ready(function () {
           tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
           var tabCell = tr.insertCell(-1);
           // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
-          tabCell.innerHTML = "<button class='addGift green darken-3' data-id='" + data[i].id + "' giftName='" + data[i].name + "'  giftPrice='" + data[i].price + "' giftHREF='" + data[i].href + "'>CHOOSE GIFT</button>";
+          tabCell.innerHTML = "<button class='addAGift green darken-3' data-id='" + data[i].id + "' giftName='" + data[i].name + "'  giftPrice='" + data[i].price + "' giftHREF='" + data[i].href + "'>CHOOSE GIFT</button>";
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
@@ -89,13 +77,8 @@ $(document).ready(function () {
         divContainer.appendChild(para);
       }
 
-      $(".addGift").click(function () {
-        console.log("Add Gift to Person: data-ID" + $(this).attr("data-id"));
-        console.log("UsrId: " + userId);
-        console.log("giftName: ", $(this).attr("giftName"));
-        console.log("giftPrice: ", $(this).attr("giftPrice"));
-        console.log("giftHREF: ", $(this).attr("giftHREF"));
-        addPersonGift(userId, $(this).attr("giftName"), $(this).attr("giftPrice"),  $(this).attr("giftHREF"));
+      $(".addAGift").click(function () {
+        addPersonGift(userCircleId, $(this).attr("giftName"), $(this).attr("giftPrice"),  $(this).attr("giftHREF"));
       });
 
 
@@ -105,7 +88,6 @@ $(document).ready(function () {
   
   // Otherwise we log any errors
   function addPersonGift(userCircleId, giftName, giftPrice, giftHREF) {
-    console.log("function addPerson Gift called");
     $.post("/api/addPersonGift", {
       UserCircleId: userCircleId,
       name: giftName,
@@ -113,7 +95,6 @@ $(document).ready(function () {
       href: giftHREF
     })
       .then(function (data) {
-        console.log("addedPersonGift", data);
         $("#alert .msg").text("Gift Added to Selected person Successfully!");
         window.location.replace("/giftSearch.html?id=" + data.UserCircleId);
       })
@@ -123,10 +104,7 @@ $(document).ready(function () {
   dispGiftList(userCircleId);
 
   function dispGiftList(userCircleId) {
-    console.log("within disp Gift List: " + "userCircleId: " + userCircleId);
     $.get("/api/dispChosenGifts/" + userCircleId, function (data) {
-      console.log("Match results in giftSearch: ", data);
-
       if (data.length !== 0) {
         //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Click to Remove"];
         var col = ["NAME", "PRICE", "HREF", "Click to Remove"];
@@ -167,7 +145,6 @@ $(document).ready(function () {
       }
 
       $(".deleteGift").click(function () {
-        console.log("delete Person: data-ID" + $(this).attr("data-id"));
         $.ajax({
           method: "DELETE",
           url: "/api/delPersonGift/" + userCircleId + "/" + $(this).attr("data-id")
@@ -183,49 +160,9 @@ $(document).ready(function () {
     });
   }
 
-  // When the signup button is clicked, we validate the email and password are not blank
-  searchGift.on("submit", function (event) {
-    event.preventDefault();
-    console.log("form submit working");
-    var srchGift = {
-      srchInput: $("#srchInput").val().trim()
-    };
-
-    if (!srchGift.srchInput) {
-      return;
-    }
-    // If we have an email and password, run the signUpUser function
-    getGifts(srchGift.srchInput);
-    $("#srchInput").val("");
-  });
-
-  // Does a post to the signup route. If successful, we are redirected to the members page
-  // Otherwise we log any errors
-  function getGifts(srchGift) {
-    console.log("function getGifts called");
-    $.get("/api/giftSearch/" + srchGift, function (data) {
-      console.log(data);
-      renderGifts(data);
-    });
+  
+  function handleLoginErr(err) {
+    $("#alert .msg").text(err.responseJSON);
+    $("#alert").fadeIn(500);
   }
-
-  function renderGifts(data) {
-    if (data.length !== 0) {
-      $("#srchedResult").empty();
-      $("#srchedResult").show();
-      for (var i = 0; i < data.length; i++) {
-        var div = $("<div>");
-
-        div.append("<h2>" + data[i].title + "</h2>");
-        div.append("<p>Name: " + data[i].name + "</p>");
-        div.append("<p>Category: " + data[i].category + "</p>");
-        div.append("<p>Price: " + data[i].price + "</p>");
-        div.append("<p>URL Link: " + data[i].href + "</p>");
-        div.append("<button class='select' data-id='" + data[i].id + "'>SELECT GIFT</button>");
-
-        $("#srchedResult").append(div);
-
-      }
-
-    }
-  });
+});
