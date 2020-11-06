@@ -35,5 +35,5 @@
   * [Jeff Thao](https://github.com/JeffThao)
   * [Ravi Knutson](https://github.com/Knuts839)
   * [Samer Saadoun](https://github.com/samergain)
-  Big shoutout to [Dan Mueller](https://github.com/demuelle), [Kieran Anthony](https://github.com/zekkxx) , Gage Eide, Matthew Johnson
+  Big shoutout to [Dan Mueller](https://github.com/demuelle), [Kieran Anthony](https://github.com/zekkxx) , [Gage Eide](https://github.com/gage117), Matthew Johnson
   
