@@ -82,3 +82,7 @@ td{
   background-image: url("https://ae01.alicdn.com/kf/HTB1S3F5OpXXXXXRXpXXq6xXFXXX9/Hand-painted-Christmas-Oil-Painting-Drawing-Santa-Claus-Send-Gifts-Kids-Canvas-Pictures-New-Year-Christmas.jpg_Q90.jpg_.webp");
   background-size: cover;
 }
+
+img {
+  width: 75%;
+}

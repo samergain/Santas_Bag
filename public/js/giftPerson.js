@@ -36,7 +36,6 @@ $(document).ready(function() {
     $("#ageInput").val("");
     $("#priceInput").val("");
     $("#interestsInput").val("");
-
   });
 
 
