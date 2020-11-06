@@ -13,9 +13,7 @@ $(document).ready(function () {
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
   function findPersons(userId) {
-    console.log("function findPersons called for userId: ", userId);
     $.get("/api/getAllPersons/" + userId, function (data) {
-      console.log(data);
       renderGiftPersons(data);
     });
   }
@@ -24,6 +22,7 @@ $(document).ready(function () {
 
     let totalPrice;
     let totalgiftCount;
+    let totalGiftBudget=0;
 
     if (data.length !== 0) {
       $("#stats").empty();
@@ -31,10 +30,13 @@ $(document).ready(function () {
 
       for (var i = 0; i < data.length; i++) {
 
-        let totalInfo = await getTotalCost(data[i].id);
+        let totalInfoByPerson = await getTotalCost(data[i].id);
 
-        console.log("totalInfo from Function: ", totalInfo);
-
+        totalGiftBudget += parseInt(totalPrice);
+        
+        // $('#totalBudget').innerHTML(totalGiftBudget);
+        // $('#totalBudget').val(totalGiftBudget);
+        $('#totalBudget').text(totalGiftBudget);
         var div = $("<div>");
 
         div.append("<h5>" + data[i].name + "</h5>");
@@ -42,14 +44,21 @@ $(document).ready(function () {
         div.append("<p>Age: " + data[i].age + "</p>");
         div.append("<p>Budget: " + data[i].budget + "</p>");
         div.append("<p>Interests: " + data[i].keywords + "</p>");
-        div.append("<b><p>Gift Info, if any...</p></b>");
         div.append("<p>Total Gifts Selected: " + totalgiftCount + "</p>");
-        div.append("<p>Total Expense: " + totalPrice + "</p>");
+        div.append("<p class='totalPrice'>Total Expense: " + totalPrice + "</p>");
         div.append("<button class='delete btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-trash'></span> DELETE PERSON</button>");
         div.append("<span>      </span>");
         div.append("<button class='search btn btn-danger btn-lg green darken-3' data-id='" + data[i].id + "'><span class='fa fa-search'></span> SEARCH GIFT</button>");
 
         $("#stats").append(div);
+
+        if (parseInt(totalPrice) > data[i].budget){
+          $(".totalPrice").addClass( "overBudget" );
+          $(".totalPrice").removeClass( "underBudget" );
+        } else{
+          $(".totalPrice").addClass( "underBudget" );
+          $(".totalPrice").removeClass( "overBudget" );
+        }
 
       }
 
@@ -60,11 +69,13 @@ $(document).ready(function () {
         })
           // On success, run the following code
           .then(function (results) {
-            console.log("Group Results: ", results);
-            totalPrice = results[0].total_amount;
-            totalgiftCount = results[0].total_gifts;
-            console.log("TotalPrice: ", results[0].total_amount);
-            console.log("TotlGift: ", results[0].total_gifts);
+            if (results.length !== 0) {
+              totalPrice = results[0].total_amount;
+              totalgiftCount = results[0].total_gifts;
+            } else {
+              totalPrice = 0;
+              totalgiftCount = 0;
+            }
             return results;
           }).catch(function(err){
             console.log("Error on getTotalCost request in viewPerson.js:" , err);
@@ -79,7 +90,6 @@ $(document).ready(function () {
         })
           // On success, run the following code
           .then(function (response) {
-            console.log("delete respons: ", response);
             window.location.replace("/viewPerson");
           }).catch(function(err){
             console.log("Error on DELETE: ", err);
@@ -91,7 +101,6 @@ $(document).ready(function () {
 
 
       $(".search").click(function () {
-        console.log("Print GiftPerson ID:", $(this).attr("data-id"));
         window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
       });
 

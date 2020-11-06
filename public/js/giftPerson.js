@@ -16,7 +16,6 @@ $(document).ready(function() {
   // When the signup button is clicked, we validate the email and password are not blank
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
-    console.log("search form submit working");
     var userId = parseInt($(".hiddenId").text());
     var userCircleData = {
       name : $("#nameInput").val().trim(),
@@ -44,7 +43,6 @@ $(document).ready(function() {
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
   function addGiftPerson(name, age, interests, budget, userid) {
-    console.log("function addGiftPerson called");
     $.post("/api/addPerson", {
       name: name,
       age: age,
@@ -53,8 +51,6 @@ $(document).ready(function() {
       userid: userid
     })
       .then(function(data) {
-        console.log("addedGiftPErson", data);
-        //alert("New Gift Person Added Successfully!");
         $("#alert .msg").text("New Gift Person Added Successfully!");
         window.location.replace("/giftSearch.html?id=" + data.id);
       })

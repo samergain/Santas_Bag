@@ -13,8 +13,6 @@ $(document).ready(function() {
 
   function showAllGifts() {
     $.get("/api/allItemStorage", function (data) {
-      console.log("Match results in giftSearch: ", data);
-
       if (data.length !== 0) {
         // var col = ["GIFT ID", "NAME", "PRICE", "HREF"];
         var col = ["NAME", "PRICE", "HREF"];
@@ -85,7 +83,6 @@ $(document).ready(function() {
   // Does a post to the signup route. If successful, we are redirected to the members page
   // Otherwise we log any errors
   function saveFavGift(name, price, href, interests) {
-    console.log("function saveFavGift called");
     $.post("/api/saveFavGift", {
       name: name,
       price: price,
@@ -93,7 +90,6 @@ $(document).ready(function() {
       interests: interests
     })
       .then(function(data) {
-        console.log("addedFavGift", data);
         $("#alert .msg").text("Favourite Gift Added to Database Successfully!");
         window.location.replace("/saveFavs.html");
       })

@@ -57,15 +57,28 @@ th {
 td{
   color: rgb(223, 56, 56);
 }
-.addGift, .deleteGift{
+.addAGift, .deleteGift{
   color:white;
 }
 
+.totalLbl{
+  float: left;
+}
+
+.overBudget{
+  color:  rgb(223, 56, 56);
+}
+
+.underBudget{
+  color: black;
+}
+
+/* .mainBtns {
+  display: flex;
+  justify-content: space-evenly;
+} */
+
 .jumbotron{
-  /* background-image: url("https://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/12/santa-claus-10.jpg"); */
-  /* background-image: url("https://png.pngtree.com/thumb_back/fh260/background/20190813/pngtree-christmas-green-background-image_290126.jpg"); */
-  /* background-image: url("https://media.gettyimages.com/vectors/green-santa-claus-is-coming-to-town-vector-id165790132?s=612x612"); */
-  /* background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/santa-claus-christmas-tracker-1575928976.jpg?crop=1.00xw:0.790xh;0,0&resize=1200:*"); */
   background-image: url("https://ae01.alicdn.com/kf/HTB1S3F5OpXXXXXRXpXXq6xXFXXX9/Hand-painted-Christmas-Oil-Painting-Drawing-Santa-Claus-Send-Gifts-Kids-Canvas-Pictures-New-Year-Christmas.jpg_Q90.jpg_.webp");
   background-size: cover;
 }

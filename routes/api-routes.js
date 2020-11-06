@@ -201,9 +201,10 @@ module.exports = function (app) {
         [Sequelize.fn('sum', Sequelize.col('price')), 'total_amount'],
         [Sequelize.fn('count', Sequelize.col('id')), 'total_gifts'],
       ],
-      group: ['UserCircleId']
-      //having: [Sequelize.where(Sequelize.fn([Op.eq],Sequelize.col('UserCircleId'),parseInt(req.params.id)))]
+      group: ['UserCircleId'],
+      having: Sequelize.literal(`UserCircleId = ${req.params.id}`)
     }).then(function (results) {
+      console.log("getTotalCost: " , results);
       res.json(results);
     });
   });
