@@ -105,7 +105,22 @@ module.exports = function (app) {
       });
   });
 
-
+//
+  app.post("/api/saveGift", function (req, res) {
+  db.Gift.create({
+    name: req.body.name,
+    price: req.body.price,
+    href: req.body.href,
+    UserCircleId: req.body.userid
+  })
+    .then(function () {
+      // res.redirect(307, "/giftSearch");
+      res.redirect("/giftSearch");
+    })
+    .catch(function (err) {
+      res.status(401).json(err);
+    });
+});
   // Get all gifts from the table
   app.get("/api/giftSearch/:srchItem", function (req, res) {
     db.ItemStorage.findAll({
@@ -116,19 +131,7 @@ module.exports = function (app) {
       res.json(results);
     });
   });
-  //Get gifts suggestions based on budget and interests
-  // app.get("/api/giftsSuggestions/:budget/:keywords", function(req, res) {
-  //     db.ItemStorage.findAll({
-  //       where: {
-  //         [Op.and] : [
-  //           {price: {[Op.lt] : req.params.budget} },
-  //           {keywords: {[Op.substring] : req.params.keywords}}
-  //         ]    
-  //       }
-  //     }).then(function(results) {
-  //       res.json(results);
-  //     });
-  // });
+  
   // Get all gifts from the table
   app.get("/api/matchInterest/:budget/:keywords", function (req, res) {
     db.ItemStorage.findAll({
