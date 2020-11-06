@@ -33,11 +33,11 @@ input[type="checkbox"], input[type="radio"]{
 
 .dispValue{
  color: rgb(223, 56, 56);
- font:14px Verdana;
+ font:20px Verdana;
 }
 
 .lblHdr{
-  font:14px Verdana;
+  font:20px Verdana;
   font-weight:bold;
 }
 
@@ -57,9 +57,30 @@ th {
 td{
   color: rgb(223, 56, 56);
 }
+.addAGift, .deleteGift{
+  color:white;
+}
+
+.totalLbl{
+  float: left;
+}
+
+.overBudget{
+  color:  rgb(223, 56, 56);
+}
+
+.underBudget{
+  color: black;
+}
+
+/* .mainBtns {
+  display: flex;
+  justify-content: space-evenly;
+} */
 
 .jumbotron{
-  background-image: url("https://www.dvd-ppt-slideshow.com/blog/wp-content/uploads/2010/12/santa-claus-10.jpg");
+  background-image: url("https://ae01.alicdn.com/kf/HTB1S3F5OpXXXXXRXpXXq6xXFXXX9/Hand-painted-Christmas-Oil-Painting-Drawing-Santa-Claus-Send-Gifts-Kids-Canvas-Pictures-New-Year-Christmas.jpg_Q90.jpg_.webp");
+  background-size: cover;
 }
 
 img {
