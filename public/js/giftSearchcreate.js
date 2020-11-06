@@ -44,7 +44,7 @@ $.get("/api/get_apikey").then(function (apiKey) {
             }
             displayCards(giftObj)
         }).catch(function (err) {
-            // alert("API Search limit has been reached");
+            alert("API Search limit has been reached");
         });
     });
 
