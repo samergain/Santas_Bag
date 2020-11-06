@@ -9,8 +9,6 @@
   * [Usage](#usage)
   * [License](#license)
   * [Contributions](#contributions)
-  * [Tests](#tests)
-  * [Questions](#questions)
   
   ## Techs
   MySQL, Node.JS, JS, jQuery, Bootstrap and materialize, CSS, Sequelize, Express, Passport, Bcryptjs, Dotenv, Amazon Product/Reviews/Keywords API.
