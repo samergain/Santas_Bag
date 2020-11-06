@@ -7,35 +7,33 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 module.exports = function(app) {
 
   app.get("/", function(req, res) {
-    // If the user already has an account send them to the members page
+    // If the user already has an account send them to the first page they will be take to, to view the summary of their Gift Person and their details
     if (req.user) {
-      res.redirect("/giftPerson");
+      res.redirect("viewPerson");
     }
-    // res.sendFile(path.join(__dirname, "../public/signup.html"));
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
   app.get("/signup", function(req, res) {
-    // If the user already has an account send them to the members page
+    // If the user already has an account send them to the first page they will be take to, to view the summary of their Gift Person and their details
     if (req.user) {
-      res.redirect("/giftPerson");
+      res.redirect("/viewPerson");
     }
     res.sendFile(path.join(__dirname, "../public/signup.html"));
   });
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+  // Once logged-in, this will be the first page they will be take to, to view the summary of their Gift Person and their details
   app.get("/viewPerson", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/viewPerson.html"));
   });
 
 
-  // Here we've add our isAuthenticated middleware to this route.
-  // If a user who is not logged in tries to access this route they will be redirected to the signup page
+  // HTML route to Add a New Gift PErson details and attach to the Logged in User account 
   app.get("/giftPerson", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/giftPerson.html"));
   });
 
+  //html route for Save Favourote Gift Page
   app.get("/saveFavs", isAuthenticated, function(req, res) {
     res.sendFile(path.join(__dirname, "../public/saveFavs.html"));
   });

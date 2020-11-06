@@ -48,7 +48,8 @@ module.exports = function (app) {
       });
     }
   });
-  // Get all gifts from the table
+
+  // Get all Gift Persons from the UserCircle table for that particular Login-User
   app.get("/api/getAllPersons/:id", function (req, res) {
     db.UserCircle.findAll({
       where: {
@@ -60,7 +61,7 @@ module.exports = function (app) {
   });
 
 
-  // Get all gifts from the table
+  // Get specific Gift Persons from the table
   app.get("/api/getOnePerson/:id", function (req, res) {
     db.UserCircle.findAll({
       where: {
@@ -89,7 +90,7 @@ module.exports = function (app) {
       });
   });
 
-  //Route for adding userCirlce details to the table
+  //Save Favourite gifts and its details to the ItemStorage table from the GUI
   app.post("/api/saveFavGift", function (req, res) {
     db.ItemStorage.create({
       name: req.body.name,
@@ -105,7 +106,7 @@ module.exports = function (app) {
       });
   });
 
-//
+ //Save or Attache the selected Gift information to the UserCircle person/Gift person
   app.post("/api/saveGift", function (req, res) {
   db.Gift.create({
     name: req.body.name,
@@ -121,7 +122,8 @@ module.exports = function (app) {
       res.status(401).json(err);
     });
 });
-  // Get all gifts from the table
+
+  // Get all gifts from the ItemStorage table by Gift Item keyword // Is not called or used in the App at this point
   app.get("/api/giftSearch/:srchItem", function (req, res) {
     db.ItemStorage.findAll({
       where: {
@@ -132,7 +134,7 @@ module.exports = function (app) {
     });
   });
   
-  // Get all gifts from the table
+  // Get all gifts from the ItemStorage table that matches to the Gift Person's budget and keyword match
   app.get("/api/matchInterest/:budget/:keywords", function (req, res) {
     db.ItemStorage.findAll({
       where: {
@@ -147,7 +149,7 @@ module.exports = function (app) {
   });
 
 
-  //Route for adding userCirlce details to the table
+  //Adds new userCirlce (Gift Person) to the UserCircle table
   app.post("/api/addPersonGift", function (req, res) {
     db.Gift.create({
       name: req.body.name,
@@ -164,7 +166,7 @@ module.exports = function (app) {
   });
 
 
-  // Get all gifts from the table
+  // Gets all gifts from the table for a specific UserCircle (a.k.a. Gift Person)
   app.get("/api/dispChosenGifts/:id", function (req, res) {
     db.Gift.findAll({
       where: {
@@ -175,13 +177,14 @@ module.exports = function (app) {
     });
   });
 
-  // Get all gifts from the table
+  // Gets all gifts from the ItemStorage table to display in the GUI for reference (global table and not by Login User)
   app.get("/api/allItemStorage", function (req, res) {
     db.ItemStorage.findAll().then(function (results) {
       res.json(results);
     });
   });
 
+  //Remove the Gift attached to the a particular Gift Person under a particular Logged-in user
   app.delete("/api/delPersonGift/:UserCircleId/:giftId", function (req, res) {
     let saveUserCircleId = req.params.UserCircleId;
     db.Gift.destroy({
@@ -195,6 +198,7 @@ module.exports = function (app) {
     })
   });
 
+  //delete a particular Gift Person from the Logged-In user's account
   app.delete("/api/delPerson/:id/:userid", function (req, res) {
     db.UserCircle.destroy({
       where: {
@@ -208,7 +212,7 @@ module.exports = function (app) {
     })
   });
 
-
+  //Get Total Cost of price and the number of gifts chosen for a each Gift Person
   app.get("/api/getTotalCost/:id", function (req, res) {
     db.Gift.findAll({
       attributes: ['UserCircleId',

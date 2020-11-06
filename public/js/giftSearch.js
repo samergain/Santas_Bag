@@ -1,16 +1,16 @@
 $(document).ready(function () {
   // Getting references to our form and input
 
-  var searchGift = $("form.searchGift");
+  // var searchGift = $("form.searchGift");
   var userId;
   var url = window.location.search;
   var userCircleId;
 
-
+  //Get the Login User data
   $.get("/api/user_data").then(function (data) {
     userId = data.id;
   });
-
+  // Gets the specific Gift Person from the query string to identify who we need to attach the Gift to
   userCircleId = deriveIdFromQueryString();
   getPerson(userCircleId);
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
     }
   }
 
-
+  //One Gift Person and their interest details is received from DB and rendered dynamically, for login user to attache gifts to
   function getPerson(userCircleId) {
     $.get("/api/getOnePerson/" + userCircleId, function (data) {
       if (data.length !== 0) {
@@ -35,11 +35,10 @@ $(document).ready(function () {
     });
   }
 
+  //Function that gets the matching gift records from ItemStorage/Gift Repository by interest and price filters
   function matchInterest(budget, keywords) {
-
     $.get("/api/matchInterest/" + budget + "/" + keywords, function (data) {
       if (data.length !== 0) {
-        //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Choose One Gift"];
         var col = ["NAME", "PRICE", "HREF", "Choose One Gift"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
@@ -48,11 +47,8 @@ $(document).ready(function () {
           th.innerHTML = col[i];
           tr.appendChild(th);
         }
-        // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < data.length; i++) {
           tr = table.insertRow(-1);
-          // var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = data[i].id;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);
@@ -60,7 +56,6 @@ $(document).ready(function () {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
           var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
           tabCell.innerHTML = "<button class='addAGift green darken-3' data-id='" + data[i].id + "' giftName='" + data[i].name + "'  giftPrice='" + data[i].price + "' giftHREF='" + data[i].href + "'>CHOOSE GIFT</button>";
         }
 
@@ -69,7 +64,7 @@ $(document).ready(function () {
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
       } else {
-        var para = document.createElement("p");
+        var para = document.createElement("p");   //display message if there were no matching records
         para.innerHTML = "No Matching Criteria";
         var divContainer = document.getElementById("matchResult");
         divContainer.innerHTML = "";
@@ -77,16 +72,15 @@ $(document).ready(function () {
         divContainer.appendChild(para);
       }
 
+      //Send client-side AJAX to ADD the selected Gift to the particular person
       $(".addAGift").click(function () {
         addPersonGift(userCircleId, $(this).attr("giftName"), $(this).attr("giftPrice"),  $(this).attr("giftHREF"));
       });
-
-
     });
   }
 
   
-  // Otherwise we log any errors
+  // Function that Send client-side AJAX to ADD the selected Gift to the particular person
   function addPersonGift(userCircleId, giftName, giftPrice, giftHREF) {
     $.post("/api/addPersonGift", {
       UserCircleId: userCircleId,
@@ -101,12 +95,12 @@ $(document).ready(function () {
       .catch(handleLoginErr);
   }
   
+  //Display the list of Gifts "dynamically" that was attched to the particular Gift Person
   dispGiftList(userCircleId);
 
   function dispGiftList(userCircleId) {
     $.get("/api/dispChosenGifts/" + userCircleId, function (data) {
       if (data.length !== 0) {
-        //var col = ["GIFT ID", "NAME", "PRICE", "HREF", "Click to Remove"];
         var col = ["NAME", "PRICE", "HREF", "Click to Remove"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
@@ -118,8 +112,6 @@ $(document).ready(function () {
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < data.length; i++) {
           tr = table.insertRow(-1);
-          // var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = data[i].id;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);
@@ -127,7 +119,6 @@ $(document).ready(function () {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
           var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
           tabCell.innerHTML = "<button class='deleteGift green darken-3' data-id='" + data[i].id + "'>REMOVE GIFT</button>";
         }
 
@@ -144,6 +135,7 @@ $(document).ready(function () {
         divContainer.appendChild(para);
       }
 
+      //Dynamically delete the Gift attached to the person from the Person (removed from GUI and DB)
       $(".deleteGift").click(function () {
         $.ajax({
           method: "DELETE",
@@ -153,15 +145,13 @@ $(document).ready(function () {
             userCircleId = deriveIdFromQueryString();
             window.location.replace("/giftSearch.html?id=" + userCircleId);
           })
-          .catch(handleLoginErr);
+          .catch(handleErr);
       });
-
-
     });
   }
 
-  
-  function handleLoginErr(err) {
+  //Catch any Errors
+  function handleErr(err) {
     $("#alert .msg").text(err.responseJSON);
     $("#alert").fadeIn(500);
   }

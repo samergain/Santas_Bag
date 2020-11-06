@@ -8,6 +8,9 @@ var passport = require("./config/passport");
 var PORT = process.env.PORT || 8080;
 var db = require("./models");
 
+//For storing the API_KEY in the env files
+require('dotenv').config();
+console.log("PROCESS ENV: ",process.env.API_KEY);
 // Creating express app and configuring middleware needed for authentication
 var app = express();
 app.use(express.urlencoded({ extended: true }));
