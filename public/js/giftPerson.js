@@ -2,18 +2,15 @@ $(document).ready(function() {
   // Getting references to our form and input
   var addPersonForm = $("form.addPerson");
   var userId;
-  var emailInput = $("input#email-input");
-
-
+  //Get the Logged-In User Data for further use
   $.get("/api/user_data").then(function(data) {
     $(".member-name").text(data.email);
     userId = data.id;
-    // findPersons(userId);
     $(".hiddenId").text(data.id);
   });
 
 
-  // When the signup button is clicked, we validate the email and password are not blank
+  // Add Gift Person Button Click Event
   addPersonForm.on("submit", function(event) {
     event.preventDefault();
     var userId = parseInt($(".hiddenId").text());
@@ -28,9 +25,7 @@ $(document).ready(function() {
     if (!userCircleData.name)  {
       return;
     }
-
-
-    // If we have an email and password, run the signUpUser function
+    // Calling Add Gift Person function where the AJAX call is made to insert a new Gift Person to the DB
     addGiftPerson(userCircleData.name, userCircleData.age, userCircleData.interests, userCircleData.budget, userCircleData.userid);
     $("#nameInput").val("");
     $("#ageInput").val("");
@@ -39,8 +34,7 @@ $(document).ready(function() {
   });
 
 
-  // Does a post to the signup route. If successful, we are redirected to the members page
-  // Otherwise we log any errors
+  // Add Gift Person API POST to submit the GIFT PERSON form entries to the server and save into the DB
   function addGiftPerson(name, age, interests, budget, userid) {
     $.post("/api/addPerson", {
       name: name,

@@ -3,18 +3,18 @@ $(document).ready(function() {
   var saveFavs = $("form.saveFavs");
   var userId;
 
-
+  //Get the Login User information
   $.get("/api/user_data").then(function(data) {
     $(".member-name").text(data.email);
     userId = data.id;  
   });
 
+  //Render all the Gifts added to the Favourites dynamically
   showAllGifts();
 
   function showAllGifts() {
     $.get("/api/allItemStorage", function (data) {
       if (data.length !== 0) {
-        // var col = ["GIFT ID", "NAME", "PRICE", "HREF"];
         var col = ["NAME", "PRICE", "HREF"];
         var table = document.createElement("table");
         var tr = table.insertRow(-1);                   // TABLE ROW.
@@ -26,8 +26,6 @@ $(document).ready(function() {
         // ADD JSON DATA TO THE TABLE AS ROWS.
         for (var i = 0; i < data.length; i++) {
           tr = table.insertRow(-1);
-          // var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = data[i].id;
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = data[i].name;
           var tabCell = tr.insertCell(-1);
@@ -35,8 +33,6 @@ $(document).ready(function() {
           var tabCell = tr.insertCell(-1);
           tabCell.innerHTML = `<a href="${data[i].href}" target="_blank">URL</a>`;
           var tabCell = tr.insertCell(-1);
-          // tabCell.innerHTML = "<button class='addGift' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
-          // tabCell.innerHTML = "<button class='deleteGift green darken-3' data-id='" + data[i].id + "'>CHOOSE GIFT</button>";
         }
 
         // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
@@ -56,7 +52,7 @@ $(document).ready(function() {
   }
 
 
-  // When the signup button is clicked, we validate the email and password are not blank
+  // The page also has option to add new gift favorites. This it the Onclick of the SaveFavourite feature.
   saveFavs.on("submit", function(event) {
     event.preventDefault();
     var itemStorageData = {
@@ -70,7 +66,6 @@ $(document).ready(function() {
       return;
     }
 
-    // If we have an email and password, run the signUpUser function
     saveFavGift(itemStorageData.name, itemStorageData.price, itemStorageData.href, itemStorageData.interests);
     $("#nameInput").val("");
     $("#hrefInput").val("");
@@ -80,8 +75,7 @@ $(document).ready(function() {
   });
 
 
-  // Does a post to the signup route. If successful, we are redirected to the members page
-  // Otherwise we log any errors
+//Save the Favourites Gifts manually entered into the Save Faoutire Form
   function saveFavGift(name, price, href, interests) {
     $.post("/api/saveFavGift", {
       name: name,
