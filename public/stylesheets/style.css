@@ -83,20 +83,12 @@ td{
   background-size: cover;
 }
 
-img {
-  width: 75%;
-}
 
 .giftCard{
   width:400px;
   height: 400px;
 }
 
-.card-img-top {
-  width: 100%;
-  height: 15vw;
-  object-fit: cover;
-}
 
 .addGift{
   color: green;

@@ -228,4 +228,11 @@ module.exports = function (app) {
   });
 
 
+  // Route for getting some data about our user to be used client side
+  app.get("/api/get_apikey", function (req, res) {
+    let apiKey = process.env.API_KEY;
+    res.send(apiKey);
+  });
+
+
 };
