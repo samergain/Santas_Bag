@@ -6,20 +6,21 @@ $(document).ready(function () {
     $(".member-name").text(data.email);
     userId = data.id;
     findPersons(userId);
-    $(".hiddenId").text(data.id);
+    // $(".hiddenId").text(data.id);
   });
 
   findPersons(userId);
-  // Does a post to the signup route. If successful, we are redirected to the members page
-  // Otherwise we log any errors
+
+  //As soon as the user is logged in, they will be taken to this page to view their summary of the gift Persons added so far and theird details
+  //Client-side API route to get all persons for a particular User
   function findPersons(userId) {
     $.get("/api/getAllPersons/" + userId, function (data) {
       renderGiftPersons(data);
     });
   }
 
+  //ASYNC function that renders the gift Person(s) Data dynamically on the page
   async function renderGiftPersons(data) {
-
     let totalPrice;
     let totalgiftCount;
     let totalGiftBudget=0;
@@ -29,18 +30,13 @@ $(document).ready(function () {
       $("#stats").show();
 
       for (var i = 0; i < data.length; i++) {
-
-        let totalInfoByPerson = await getTotalCost(data[i].id);
-
-        totalGiftBudget += parseInt(totalPrice);
-        
-        // $('#totalBudget').innerHTML(totalGiftBudget);
-        // $('#totalBudget').val(totalGiftBudget);
+        await getTotalCost(data[i].id);
+        totalGiftBudget += parseInt(totalPrice);  //calculate the total budget for the logged in User
+      
         $('#totalBudget').text(totalGiftBudget);
         var div = $("<div>");
 
         div.append("<h5>" + data[i].name + "</h5>");
-        // div.append("<p>Id: " + data[i].id + "</p>");
         div.append("<p>Age: " + data[i].age + "</p>");
         div.append("<p>Budget: " + data[i].budget + "</p>");
         div.append("<p>Interests: " + data[i].keywords + "</p>");
@@ -62,12 +58,12 @@ $(document).ready(function () {
 
       }
 
+      //function that calculates the total cost for each gift-Person and number of gifts,  by a ajax call to Sequelize DB
       function getTotalCost(id){
         return $.ajax({
           method: "GET",
           url: "/api/getTotalCost/" + id
         })
-          // On success, run the following code
           .then(function (results) {
             if (results.length !== 0) {
               totalPrice = results[0].total_amount;
@@ -82,13 +78,12 @@ $(document).ready(function () {
           });
     
       }
-
+      //delete Gift Person
       $(".delete").click(function () {
         $.ajax({
           method: "DELETE",
           url: "/api/delPerson/" + $(this).attr("data-id") + "/" + userId
         })
-          // On success, run the following code
           .then(function (response) {
             window.location.replace("/viewPerson");
           }).catch(function(err){
@@ -99,15 +94,13 @@ $(document).ready(function () {
         //$(this).closest("div").remove();
       });
 
-
+      //Search Button Click Event that takes to the Search Gift Page
       $(".search").click(function () {
         window.location.replace("/giftSearch.html?id=" + $(this).attr("data-id"));
       });
 
-
     }
   }
-
-  
+ 
 
 });

@@ -22,7 +22,7 @@ $(document).ready(function() {
     passwordInput.val("");
   });
 
-  // loginUser does a post to our "api/login" route and if successful, redirects us the the members page
+  // loginUser does a post to our "api/login" route and if successful, redirects us the the View Gift Person page
   function loginUser(email, password) {
     $.post("/api/login", {
       email: email,
@@ -30,7 +30,7 @@ $(document).ready(function() {
     })
       .then(function() {
         window.location.replace("/viewPerson.html");
-        // If there's an error, log the error
+        // If there's an error, log the error and alert that the user might be a new user and redirects to SignUp Page
       })
       .catch(function(err) {
         console.log(err);
