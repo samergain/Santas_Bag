@@ -4,6 +4,8 @@ let giftObj = {
     current_price: [],
     url: []
 };
+require('dotenv').config();
+let apiKey = process.env.API_KEY; 
 $("#submitBtn").click(function (event) {
     event.preventDefault();
     console.log("inside");
@@ -16,7 +18,7 @@ $("#submitBtn").click(function (event) {
         "url": `https://rapidapi.p.rapidapi.com/product/search?keyword=${giftItems}&country=US`,
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": process.env.API_KEY,
+            "x-rapidapi-key": apiKey,
             "x-rapidapi-host": "amazon-product-reviews-keywords.p.rapidapi.com"
         }
     };
