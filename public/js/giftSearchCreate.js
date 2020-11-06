@@ -1,15 +1,10 @@
 //Get the APIKEY data from Server
 let API_KEY;
-
 $.get("/api/get_apikey").then(function (apiKey) {
-
     console.log("APIKEY from Server:", apiKey);
     API_KEY = apiKey;
-
 });
-
 //AJAX API call to Amazon api via RapidAPI
-
     let giftObj = {
         title: [],
         thumbnail: [],
@@ -47,7 +42,6 @@ $.get("/api/get_apikey").then(function (apiKey) {
             alert("API Search limit has been reached");
         });
     });
-
     // Dynamically rendering API results
     function displayCards(giftObj) {
         console.log(giftObj)
@@ -82,7 +76,6 @@ $.get("/api/get_apikey").then(function (apiKey) {
             $(".result").append(d1);
         }
     }
-
 // Get userCircleId from the QueryString
 let url = window.location.search;
 let userCircleId;
@@ -90,8 +83,6 @@ if (url.indexOf("?id=") !== -1) {
     userCircleId = url.split("=")[1];
     console.log("giftSearch file - userCircleId #1: ", userCircleId);
 }
-
-
 // Add the Gift selected from the API response to the Gift Person of the Login User 
 document.body.addEventListener('click', function (event) {
     console.log(event);
@@ -103,22 +94,18 @@ document.body.addEventListener('click', function (event) {
             userCircleId = url.split("=")[1];
             console.log("giftSearch file - userCircleId #1: ", userCircleId);
         }
-
         // let btnID = $(this).attr("id");
         let btnID = event.target.id;            //Each button Id carries the index of the array that contains the API results
         let giftTitle = giftObj.title[btnID].slice(0, 30);
         let giftPrice = parseInt(giftObj.current_price[btnID].replace('$', ''));    //Removes the $ sign from the Price value
         let giftURL = giftObj.url[btnID];
-
         console.log("BUTTON ID: ", btnID);
         console.log("giftObj.userCircleId: ", userCircleId);
         console.log("giftObj.title: ", giftTitle);
         console.log("giftObj.price: ", giftPrice);
         console.log("giftObj.url: ", giftURL);
-
         addGiftBtn(giftTitle, userCircleId, giftPrice, giftURL);
     }
-
     //Function to Add a Gift from API response to the Gift Person
     function addGiftBtn(giftTitle, giftUserId, giftPrice, giftHref) {
         console.log("function addGiftBtn called");
