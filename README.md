@@ -11,7 +11,7 @@
   * [Contributions](#contributions)
   
   ## Techs
-  MySQL, Node.JS, JS, jQuery, Bootstrap and materialize, CSS, Sequelize, Express, Passport, Bcryptjs, Dotenv, Amazon Product/Reviews/Keywords API.
+  MySQL, Node.JS, JS, jQuery, Bootstrap and materialize, CSS, Sequelize, Express, Passport, Bcryptjs, Dotenv, [Amazon Product/Reviews/Keywords API](https://rapidapi.com/logicbuilder/api/amazon-product-reviews-keywords/).
 
   ## Installation
   To run the app on your local computer you'll need to have MySQL installed. Download the project -> run npm i -> create .env file to setup your local db connection variables || use config.json to set up your local connection to MySQL -> in terminal run: npm start. 
