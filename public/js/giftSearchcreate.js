@@ -4,6 +4,7 @@ let giftObj = {
     current_price: [],
     url: []
 };
+console.log(process.env.API_KEY);
 $("#submitBtn").click(function (event) {
     event.preventDefault();
     console.log("inside");
@@ -16,7 +17,7 @@ $("#submitBtn").click(function (event) {
         "url": `https://rapidapi.p.rapidapi.com/product/search?keyword=${giftItems}&country=US`,
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "f1ac4b6966msh9333351f4900185p121ab0jsn17e83c03cc27",
+            "x-rapidapi-key": process.env.API_KEY,
             "x-rapidapi-host": "amazon-product-reviews-keywords.p.rapidapi.com"
         }
     };
