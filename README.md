@@ -1,7 +1,7 @@
 # Santa's Bag
 
 ## Description
-   This app will help you plan your gifts shopping process during the holiday season. You can add all your loved ones and specify a budget for each one and the app will help you find the right gift/s along with managing your overall budget. 
+   This app will ease your gifts shopping process during the holiday season. You can add all your loved ones and specify a budget for each one and the app will help you find the right gift/s along with managing your overall budget. 
 
   ## Table of Contents:
   * [Techs](#Techs)
