@@ -26,9 +26,9 @@
   [Watch a Demo](https://www.youtube.com/watch?v=anhtoBlPbDM)  
   
   ## Screenshots
-  ![screenshot](workday.png)
-  ![screenshot](workday.png)
-  ![screenshot](workday.png)
+  ![screenshot](screenshots/santa1.png)
+  ![screenshot](screenshots/santa2.png)
+  ![screenshot](screenshots/santa3.png)
   
   ## License
   None
