@@ -11,6 +11,10 @@ $("#submitBtn").click(function (event) {
     let gift = $(this).attr("data-gift");
     console.log(gift);
     let giftItems = $("#srchInput").val().trim();
+    // To hide apikey, would need to npm i dotenv, then create .env file,
+    // In that file, save api key with API_KEY: f1kfjdklfjae(whatever apikey is).
+    // Then call it with require.
+    // let apiKey = process.env.API_KEY;
 
     const settings = {
         "async": true,
@@ -18,7 +22,7 @@ $("#submitBtn").click(function (event) {
         "url": `https://rapidapi.p.rapidapi.com/product/search?keyword=${giftItems}&country=US`,
         "method": "GET",
         "headers": {
-            "x-rapidapi-key": "",
+            "x-rapidapi-key": "f1ac4b6966msh9333351f4900185p121ab0jsn17e83c03cc27",
             "x-rapidapi-host": "amazon-product-reviews-keywords.p.rapidapi.com"
         }
     };
