@@ -1,7 +1,7 @@
 //Get the APIKEY data from Server
 let API_KEY;
 $.get("/api/get_apikey").then(function (apiKey) {
-    console.log("APIKEY from Server:", apiKey);
+    // console.log("APIKEY from Server:", apiKey);
     API_KEY = apiKey;
 });
 //AJAX API call to Amazon api via RapidAPI
@@ -13,9 +13,9 @@ $.get("/api/get_apikey").then(function (apiKey) {
     };
     $("#submitBtn").click(function (event) {
         event.preventDefault();
-        console.log("inside");
-        // let gift = $(this).attr("data-gift");
-        // console.log(gift);
+        alert("We are getting the items, this may take a few seconds.");
+        let gift = $(this).attr("data-gift");
+        console.log(gift);
         let giftItems = $("#srchInput").val().trim();
         const settings = {
             "async": true,
@@ -52,7 +52,7 @@ $.get("/api/get_apikey").then(function (apiKey) {
             let d2 = $("<div>");
             d2.attr("class", "card-body");
             let img = $("<img>");
-            img.attr("class", "card-img-top");
+            img.attr("class", "card-img-top img-height");
             img.attr("src", giftObj.thumbnail[i]);
             let btnTag = $("<button>");
             btnTag.attr("class", "addGift");
@@ -67,12 +67,14 @@ $.get("/api/get_apikey").then(function (apiKey) {
             let pTag = $("<p>");
             pTag.attr("class", "card-text");
             pTag.text(giftObj.current_price[i]);
+            let hrTag = $("<hr>");
             d1.append(d2);
             d1.append(img);
             d1.append(btnTag);
             d2.append(hFive);
             hFive.append(aTag);
             d2.append(pTag);
+            d1.append(hrTag);
             $(".result").append(d1);
         }
     }

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- Gift Search Page, allows gift to be search from local DB and API and be attached to the user and deleted, if not needed -->
+
 <head>
   <title>Gift Search</title>
   <meta charset="UTF-8">
@@ -17,30 +18,34 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-default">
+  <nav class="navbar red darken-4">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="/logout">
-          Logout
+          <span class="fa fa-sign-out"> Logout</span>
         </a>
       </div>
     </div>
   </nav>
   <div class="container red darken-4 ">
-    <div class="jumbotron" style="margin-top:0">
+    <div class="jumbotron" style="margin-top:20px">
       <h1 style="text-shadow: 2px 2px black; color: red" class="jumbotronic">Santa's Bag!!! Ho! Ho! Ho!</h1>
-      <h6 style="text-shadow: 1px 1px red; color:white"></span>Don't Freeze! Make your Christmas Gift Planning a Breeze ...<span class="fa fa-smile-o"></span></h6>
+      <h6 style="text-shadow: 1px 1px red; color:white"></span>Don't Freeze! Make your Christmas Gift Planning a Breeze
+        ...<span class="fa fa-smile-o"></span></h6>
     </div>
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
             <div class="well mainBtns" id="buttons">
-              <a href="/viewPerson" class="btn btn-danger btn-lg green darken-3"><span class="fa fa-eye"></span> View Your Circle</a>
-              <a href="/giftPerson" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add Gift Person</a>
-              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add Fav Gifts</a>
-              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-eye"></span> View Fav Gifts</a>
-              <a href="/logout" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-sign-out"></span>Log Out</a>
+              <a href="/viewPerson" class="btn btn-danger btn-lg green darken-3"><span class="fa fa-eye"></span> View
+                Your Circle</a>
+              <a href="/giftPerson" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add
+                Gift Person</a>
+              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-plus"></span> Add Fav
+                Gifts</a>
+              <a href="/saveFavs" class="btn btn-danger btn-lg green darken-3"> <span class="fa fa-eye"></span> View Fav
+                Gifts</a>
             </div>
           </div>
         </div>
@@ -83,7 +88,7 @@
           </div>
         </div>
       </div>
-    <!-- </div>
+      <!-- </div>
 
     <div class="row"> -->
       <div class="col-md-6" id="giftListCol">
@@ -121,6 +126,13 @@
           <div class="result">
           </div>
         </div>
+      </div>
+      <div class="container-fluid fixed-bottom">
+        <footer class="footer">
+          <p class="text-center text-muted"><i class="fa fa-copyright" aria-hidden="true"></i>
+            Copyright 2020 Santa's Bag
+          </p>
+        </footer>
       </div>
     </div>
 
