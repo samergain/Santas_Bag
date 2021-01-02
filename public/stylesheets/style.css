@@ -15,7 +15,7 @@ form.login {
 } */
 
 body{
-  background-color: darkgreen;
+  background-color: rgb(11, 110, 11);
 }
 
 .container {
@@ -40,7 +40,7 @@ input[type="checkbox"], input[type="radio"]{
 }
 
 .dispValue{
- color: rgb(223, 56, 56);
+ color: rgb(173, 42, 42);
  font:20px Verdana;
 }
 
@@ -63,14 +63,14 @@ th {
   font-weight:bold;
 }
 td{
-  color: rgb(223, 56, 56);
+  color: rgb(161, 37, 37);
 }
 .addAGift, .deleteGift{
   color:white;
 }
 
 .overBudget{
-  color:  rgb(223, 56, 56);
+  color:  rgb(181, 40, 40);
 }
 
 .underBudget{
@@ -96,7 +96,7 @@ td{
 
 
 .addGift{
-  color: green;
+  color: rgb(19, 94, 19);
   display: block;
   margin-top: 10px;
 }
