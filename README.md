@@ -2,6 +2,10 @@
 
 ## Description
    This app will ease your gifts shopping process during the holiday season. You can add all your loved ones and specify a budget for each one and the app will help you find the right gift/s along with managing your overall budget. 
+   
+## Demo Login
+username: samers88@gmail.com  
+password: 12345678  
 
   ## Table of Contents:
   * [Techs](#Techs)
