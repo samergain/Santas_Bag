@@ -1,18 +1,25 @@
 # Santa's Bag
 
 ## Description
-   This app will ease your gifts shopping process during the holiday season. You can add all your loved ones and specify a budget for each one and the app will help you find the right gift/s along with managing your overall budget. 
+   This app will ease your gifts shopping process during the holiday season. You can add all your loved ones and specify a budget for each one and the app will help you find the right gift/s along with managing your overall budget.  
    
-## Demo Login
-username: samers88@gmail.com  
-password: 12345678  
-
-  ## Table of Contents:
+## Table of Contents:
+  * [Demo Login](#Demo_Login)
+  * [Links](#Links)
   * [Techs](#Techs)
   * [Installation](#Installation)
   * [Usage](#usage)
-  * [License](#license)
   * [Contributions](#contributions)
+  
+   
+## Demo_Login
+username: samers88@gmail.com  
+password: 12345678  
+
+## Links  
+- [Heroku Deployed App](https://santas-bag.herokuapp.com/)  
+- [Watch a Demo](https://www.youtube.com/watch?v=anhtoBlPbDM)  
+
   
   ## Techs
   MySQL, Node.JS, JS, jQuery, Bootstrap and materialize, CSS, Sequelize, Express, Passport, Bcryptjs, Dotenv, [Amazon Product/Reviews/Keywords API](https://rapidapi.com/logicbuilder/api/amazon-product-reviews-keywords/).
@@ -34,8 +41,6 @@ password: 12345678
   ![screenshot](screenshots/santa2.png)
   ![screenshot](screenshots/santa3.png)
   
-  ## License
-  None
   
   ## Contributions
   The team behind this app:
@@ -43,5 +48,4 @@ password: 12345678
   * [Jeff Thao](https://github.com/JeffThao)
   * [Ravi Knutson](https://github.com/Knuts839)
   * [Samer Saadoun](https://github.com/samergain)  
-  Big shoutout to [Dan Mueller](https://github.com/demuelle), [Kieran Anthony](https://github.com/zekkxx) , [Gage Eide](https://github.com/gage117), Matthew Johnson
   
